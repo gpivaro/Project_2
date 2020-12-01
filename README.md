@@ -12,3 +12,5 @@ https://www.adsbexchange.com/
 https://www.adsbexchange.com/data/#
 
 https://www.airport-data.com/airport/36TS/
+
+http://www.virtualradarserver.co.uk/Documentation/Formats/AircraftList.aspx
