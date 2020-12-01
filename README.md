@@ -10,3 +10,5 @@ https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json
 https://www.adsbexchange.com/
 
 https://www.adsbexchange.com/data/#
+
+https://www.airport-data.com/airport/36TS/
