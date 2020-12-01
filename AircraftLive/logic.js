@@ -1,8 +1,10 @@
 // Creating our initial map object
 // L.map accepts 2 arguments: id of the HTML element to insert the map, and an object containing the initial options for the new map
 var myMap = L.map("map", {
-  center: [31.56, -96.47],
-  zoom: 7
+  // For Houston uncomment:
+  // center: [31.56, -96.47],
+  center: [0, 0],
+  zoom: 2.1
 });
 
 // Adding a tile layer (the background map image) to our map.

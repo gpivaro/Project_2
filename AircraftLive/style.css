@@ -8,6 +8,7 @@ body {
 #map,
 body,
 html {
-  height: 380px;
-  width: 1000px;
+  height: 100%;
+  /* height: 380px; */
+  /* width: 1000px; */
 }
