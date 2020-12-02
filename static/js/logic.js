@@ -95,7 +95,7 @@ d3.json(url).then((data) => {
   };
 
   // print the object data
-  console.log(flightData.length);
+  // console.log(flightData.length);
 
   // Display on the screen the number of cleaned data points 
   document.getElementById('numAircrafts').textContent = flightData.length;
@@ -233,11 +233,11 @@ d3.json(url).then((data) => {
     }
   };
   posSource.push({ "Type": "ADS-B", "Qtd": ADSB }, { "Type": "ASTERIX", "Qtd": ASTERIX }, { "Type": "MLAT", "Qtd": MLAT });
-  console.log(posSource);
+  // console.log(posSource);
 
 
-  console.log(Object.entries(posSource));
-  console.log(Object.keys(posSource));
+  // console.log(Object.entries(posSource));
+  // console.log(Object.keys(posSource));
 
   var data = [{
     values: posSource.map(element => element.Qtd),
@@ -339,7 +339,6 @@ d3.csv("data/airports.csv").then((importedData) => {
   });
 
 
-
   // Create an array with the airports by countries
   countryAirPorts = [];
   for (var i = 0; i < airportData.length; i++) {
@@ -366,6 +365,15 @@ d3.csv("data/airports.csv").then((importedData) => {
     totalAirportsCountry.push({ "country": countryAirPorts[i], "airports": n });
   };
 
+  function filterCountry(d) {
+    return d.country === 'Brazil';
+  };
+
+  var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
+  console.log(currentCountryAirport[0].airports);
+  // Display on the screen the number of cleaned data points 
+  document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}
+                                                  ${currentCountryAirport[0].airports}`;
 
 
   // Sort the samples in descending order of sample values
