@@ -27,15 +27,30 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 
+  <!-- plotly -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
   <!-- Our CSS -->
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
 
+  <h1>Live Aircrafts Tracking</h1>
+
+  <p id="waitLoading" style="color: red;"></p>
+  <p>
+    Number of aircrafts currently on the map: <span id="numAircrafts" style="color: red;"></span>
+  </p>
+
+
+
 
   <!-- The div where we will inject our map -->
   <div id="map"></div>
+
+  <div id="barChart"></div>
+
 
   <!-- API key -->
   <script type="text/javascript" src="config.js"></script>

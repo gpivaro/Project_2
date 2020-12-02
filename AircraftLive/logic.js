@@ -35,6 +35,12 @@ url = "https://opensky-network.org/api/states/all";
 
 d3.json(url).then((data) => {
   // Store the imported data to a variable
+
+  document.getElementById('waitLoading').textContent = "Wait... the map is being loaded!";
+
+
+
+
   flightData = [];
   for (var i = 0; i < data.states.length; i++) {
     // conditional test to get only fligths with available location and not on the ground
@@ -72,8 +78,13 @@ d3.json(url).then((data) => {
     }
   }
   // print the object data
-  console.log(flightData);
+  console.log(flightData.length);
 
+  // d3.select("#numAircrafts").selectAll('text')
+  //   .append('text')
+  //   .text(`${flightData.length}`);
+
+  document.getElementById('numAircrafts').textContent = flightData.length;
 
   flightData.forEach(function (element) {
     // add circles to map for each flight
@@ -105,14 +116,79 @@ d3.json(url).then((data) => {
 
   })
 
+  document.getElementById('waitLoading').textContent = "";
+
+  var country = [];
+
+  countrytData = [];
+  for (var i = 0; i < flightData.length; i++) {
+    // conditional test to get only fligths with
+    if (countrytData.includes(flightData[i].origin_country)) {
+      var n = 1;
+    } else {
+      countrytData.push(flightData[i].origin_country)
+    }
+
+  }
+  console.log(countrytData);
+
+
+  aircraftCountry = [];
+  for (var i = 0; i < countrytData.length; i++) {
+    // conditional test to get only fligths with
+    n = 0;
+    for (var j = 0; j < flightData.length; j++) {
+      if (countrytData[i] === flightData[j].origin_country) {
+        n += 1
+      }
+    }
+    aircraftCountry.push(n);
+  }
+
+  console.log(aircraftCountry);
+
+
+  // Trace1 to display the top 10 OTUs found in that individual
+  var trace1 = {
+    x: countrytData.slice(0, 10),
+    y: aircraftCountry.slice(0, 10),
+    type: "bar"
+  };
+
+  // create an array to be plotted
+  var chartData = [trace1];
+
+
+  // Responsive chart
+  var config = { responsive: true };
+
+  var layout = {
+    title: "Aircraft by Country"
+  }
+
+
+  // Render the plot to the div tag id "plot"
+  Plotly.newPlot("barChart", chartData, layout, config);
+
+
+
 
 
 });
 
 
 
-var time_now = Date.now() / 1000
-var time_onehour = (Date.now() / 1000 + 1000 * 60 * 60)
-var departure_url = `https://opensky-network.org/api/flights/departure?airport=EDDF&begin=${time_now}&end=${time_onehour}`
-console.log(departure_url)
+// var time_now = Date.now() / 1000
+// var time_onehour = (Date.now() / 1000 + 1000 * 60 * 60)
+// var departure_url = `https://opensky-network.org/api/flights/departure?airport=EDDF&begin=${time_now}&end=${time_onehour}`
+// console.log(departure_url)
 
+airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
+
+d3.csv(airports_url).then((data) => {
+  console.log(data);
+
+  var airportData = data;
+
+
+});
