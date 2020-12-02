@@ -195,7 +195,7 @@ d3.json(url).then((data) => {
   }
 
   // Render the plot to the div tag id "plot"
-  Plotly.newPlot("barChart", chartData, layout, config);
+  Plotly.newPlot("barChart", chartData, layout, config, { displayModeBar: false });
 
 
   var trace2 = {
@@ -216,7 +216,7 @@ d3.json(url).then((data) => {
     }
   };
 
-  Plotly.newPlot('baroAltitudeHist', histData, layout, config);
+  Plotly.newPlot('baroAltitudeHist', histData, layout, config, { displayModeBar: false });
 
 
   var posSource = [];
@@ -289,7 +289,7 @@ d3.json(url).then((data) => {
     }
   }
 
-  Plotly.newPlot('scatterVelAltitude', data, layout, config);
+  Plotly.newPlot('scatterVelAltitude', data, layout, config, { displayModeBar: false });
 
 
 });
@@ -418,7 +418,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   }
 
   // Render the plot to the div tag id "plot"
-  Plotly.newPlot("barChartAirports", chartData, layout, config);
+  Plotly.newPlot("barChartAirports", chartData, layout, config, { displayModeBar: false });
 });
 
 // https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
