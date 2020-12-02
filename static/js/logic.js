@@ -51,6 +51,7 @@ url = "https://opensky-network.org/api/states/all";
 
 d3.json(url).then((data) => {
   // Store the imported data to a variable
+  console.log(data);
 
   // document.getElementById('waitLoading').textContent = "Wait... the map is being loaded!";
 
