@@ -177,18 +177,15 @@ d3.json(url).then((data) => {
 });
 
 
-
-// var time_now = Date.now() / 1000
-// var time_onehour = (Date.now() / 1000 + 1000 * 60 * 60)
-// var departure_url = `https://opensky-network.org/api/flights/departure?airport=EDDF&begin=${time_now}&end=${time_onehour}`
-// console.log(departure_url)
-
+// Data for the airport locations
 airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
 
 d3.csv(airports_url).then((data) => {
   console.log(data);
 
-  var airportData = data;
+  // var airportData = data;
 
 
 });
+
+// https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
