@@ -20,6 +20,8 @@ L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?acce
   accessToken: API_KEY
 }).addTo(myMap);
 
+L.terminator().addTo(myMap);
+
 
 /* Date.prototype.toLocaleDateString()
      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
@@ -283,19 +285,120 @@ d3.json(url).then((data) => {
 // Data for the airport locations
 airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
 
-d3.csv(airports_url).then((data) => {
-  console.log(data);
+d3.csv("../data/airports.csv").then((importedData) => {
+  // console.log(importedData);
 
-  var airportData = [];
-  for (var i = 0; i < data.length; i++) {
-    airportData.push({
-      "name": data[i]["Goroka Airport"],
-    });
+  var airportData = importedData;
+  // Cast the data value to a number for each piece of data
+  airportData.forEach(function (d) {
+    d["Airport ID"] = +d["Airport ID"];
+    d["Altitude"] = +d["Altitude"];
+    d["Latitude"] = +d["Latitude"];
+    d["Longitude"] = +d["Longitude"];
+  });
+
+  // console.log(airportData);
+
+  airportData.forEach(function (element) {
+    if (element.Country === "Brazil") {
+      L.circle([element.Latitude, element.Longitude], {
+        fillOpacity: 0.75,
+        color: "green",
+        fillColor: "black",
+        // Adjust radius
+        radius: 2000
+      }).bindPopup(`<h3>Airport ID: ${element["Airport ID"]}</h3><hr>
+                  Airport ID: ${element["Airport ID"]}<br/>
+                  Name: ${element["Name"]}<br/>
+                  City: ${element["City"]}<br/>
+                  Country: ${element["Country"]}<br/>
+                  DST: ${element["DST"]}<br/>
+                  IATA: ${element["IATA"]}<br/>
+                  ICAO: ${element["ICAO"]}<br/>
+                  Altitude: ${element["Altitude"]}<br/>
+                  Latitude: ${element["Latitude"]}<br/>
+                  Longitude: ${element["Longitude"]}<br/>
+                  Source: ${element["Source"]}<br/>
+                  Timezone: ${element["Timezone"]}<br/>
+                  Type: ${element["Type"]}<br/>
+                  Tz database time zone: ${element["Tz database time zone"]}<br/>`
+      ).addTo(myMap);
+    }
+  });
+
+
+
+  // Create an array with the airports by countries
+  countryAirPorts = [];
+  for (var i = 0; i < airportData.length; i++) {
+    // conditional test to get only fligths with
+    if (countryAirPorts.includes(airportData[i].Country)) {
+      var n = 1;
+    } else {
+      countryAirPorts.push(airportData[i].Country)
+    }
+  };
+
+  // console.log(countryAirPorts);
+
+  // Create an object with the aircrafts by origin country
+  totalAirportsCountry = [];
+  for (var i = 0; i < countryAirPorts.length; i++) {
+    // conditional test to get only fligths with
+    n = 0;
+    for (var j = 0; j < airportData.length; j++) {
+      if (countryAirPorts[i] === airportData[j].Country) {
+        n += 1
+      }
+    }
+    totalAirportsCountry.push({ "country": countryAirPorts[i], "airports": n });
+  };
+
+
+
+  // Sort the samples in descending order of sample values
+  totalAirportsCountry.sort((a, b) => b.airports - a.airports);
+
+  // Select the top origin country number of aircrafts
+  top10CountryAirports = totalAirportsCountry.slice(0, 10);
+
+
+  // Reverse the list due to the Plotly requeriments
+  top10CountryAirports.reverse()
+
+  // console.log(top10CountryAirports);
+
+  // Trace1 to display the data
+  var trace1 = {
+    x: top10CountryAirports.map(element => element.airports),
+    y: top10CountryAirports.map(element => element.country),
+    orientation: "h",
+    type: "bar",
+    marker: {
+      color: 'rgb(142,124,195)'
+    }
+  };
+
+  // create an array to be plotted
+  var chartData = [trace1];
+
+
+  // Responsive chart
+  var config = { responsive: true };
+
+  var layout = {
+    title: "Airports by Country",
+    xaxis: {
+      title: "Number of airports"
+    },
+    yaxis: {
+      automargin: true,
+    }
   }
-  // "Goroka Airport", "Goroka", "Papua New Guinea", "GKA", "AYGA", -6.081689834590001, 145.391998291, 5282, 10, "U", "Pacific/Port_Moresby", "airport", "OurAirports"
 
-  console.log(airportData);
-
+  // Render the plot to the div tag id "plot"
+  Plotly.newPlot("barChartAirports", chartData, layout, config);
 });
 
 // https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
+
