@@ -30,6 +30,9 @@
 
 * Add layers for aircrafts, airports, weather, etc.
 
+* Add a search field to the user search by aircraft or airport
+
+* Add stats for individual flights and airports
 
 
 
