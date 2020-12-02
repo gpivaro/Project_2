@@ -12,14 +12,26 @@ var myMap = L.map("map", {
 // Leaflet doesn't have out-of-the-box tile layers, but it allows us to usetile layer APIs. Here, we're using mapbox.
 // We use the addTo method to add objects to our map
 // Documentation for tileLayer:https://leafletjs.com/reference-1.6.0.html#tilelayer
-L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-  maxZoom: 18,
-  id: "dark-v10",
-  // id: "streets-v11",
-  accessToken: API_KEY
-}).addTo(myMap);
+// L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+//   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+//   maxZoom: 18,
+//   id: "dark-v10",
+//   // id: "streets-v11",
+//   accessToken: API_KEY
+// }).addTo(myMap);
 
+
+
+// To use OpenStreetMap instead of MapBox
+var attribution =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors';
+var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var tiles = L.tileLayer(titleUrl, { attribution });
+tiles.addTo(myMap);
+
+
+
+// Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
 L.terminator().addTo(myMap);
 
 
@@ -285,7 +297,7 @@ d3.json(url).then((data) => {
 // Data for the airport locations
 airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
 
-d3.csv("../data/airports.csv").then((importedData) => {
+d3.csv("../../data/airports.csv").then((importedData) => {
   // console.log(importedData);
 
   var airportData = importedData;
