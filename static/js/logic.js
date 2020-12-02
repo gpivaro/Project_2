@@ -297,7 +297,7 @@ d3.json(url).then((data) => {
 // Data for the airport locations
 airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
 
-d3.csv("../../data/airports.csv").then((importedData) => {
+d3.csv("data/airports.csv").then((importedData) => {
   // console.log(importedData);
 
   var airportData = importedData;
