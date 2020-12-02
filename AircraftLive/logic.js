@@ -199,7 +199,7 @@ d3.json(url).then((data) => {
       title: "Frequency",
       automargin: true,
     }
-  }
+  };
 
   Plotly.newPlot('baroAltitudeHist', histData, layout, config);
 
@@ -246,6 +246,35 @@ d3.json(url).then((data) => {
   };
 
   Plotly.newPlot('positionSourcePlot', data, layout);
+
+
+
+  var trace3 = {
+    x: flightData.map(element => element.baro_altitude * 3.28084),
+    y: flightData.map(element => element.velocity * 2.23694),
+    // text: flightData.map(element => element.callsign),
+    text: flightData,
+    hovertemplate: 'Callsign: %{text.callsign}<extra></extra>' +
+      '<br>Vertical rate: %{text.vertical_rate}',
+    mode: 'markers',
+    type: 'scatter'
+  };
+
+
+  var data = [trace3];
+
+  var layout = {
+    title: "Aircraft Speed vs. Altitude",
+    xaxis: {
+      title: "Altitude (ft) "
+    },
+    yaxis: {
+      title: "Speed (mph) ",
+      automargin: true,
+    }
+  }
+
+  Plotly.newPlot('scatterVelAltitude', data, layout, config);
 
 
 });
