@@ -1,3 +1,9 @@
+// Responsive chart and hide control buttons on Plotly charts
+  var config = { 
+                responsive: true,
+               displayModeBar: false
+               };
+
 // Creating our initial map object
 // L.map accepts 2 arguments: id of the HTML element to insert the map, and an object containing the initial options for the new map
 var myMap = L.map("map", {
@@ -181,9 +187,7 @@ d3.json(url).then((data) => {
   var chartData = [trace1];
 
 
-  // Responsive chart
-  var config = { responsive: true };
-
+  
   var layout = {
     title: "Aircraft by Country of Origin",
     xaxis: {
@@ -260,7 +264,7 @@ d3.json(url).then((data) => {
     // grid: { rows: 1, columns: 1 }
   };
 
-  Plotly.newPlot('positionSourcePlot', data, layout);
+  Plotly.newPlot('positionSourcePlot', data, layout, config);
 
 
 
@@ -289,7 +293,7 @@ d3.json(url).then((data) => {
     }
   }
 
-  Plotly.newPlot('scatterVelAltitude', data, layout, config, { displayModeBar: false });
+  Plotly.newPlot('scatterVelAltitude', data, layout, config);
 
 
 });
