@@ -405,7 +405,9 @@ d3.csv("data/airports.csv").then((importedData) => {
 
 
   // Responsive chart
-  var config = { responsive: true };
+  var config = { responsive: true,
+               displayModeBar: false
+               };
 
   var layout = {
     title: "Airports by Country",
@@ -418,7 +420,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   }
 
   // Render the plot to the div tag id "plot"
-  Plotly.newPlot("barChartAirports", chartData, layout, config, { displayModeBar: false });
+  Plotly.newPlot("barChartAirports", chartData, layout, config);
 });
 
 // https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
