@@ -18,6 +18,8 @@
 
 * http://www.flyingnut.com/adsbmap/adsbObs.php
 
+* http://www.flyingnut.com/adsbmap/
+
 #### Weather API:
 
 
