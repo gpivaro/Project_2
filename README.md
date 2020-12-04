@@ -1,6 +1,6 @@
 # Project_2
 
-#### Data sources:
+#### Air Traffic Data sources:
 
 * https://openflights.org/data.html#airport
 
@@ -15,6 +15,15 @@
 * https://www.airport-data.com/airport/36TS/
 
 * http://www.virtualradarserver.co.uk/Documentation/Formats/AircraftList.aspx
+
+* http://www.flyingnut.com/adsbmap/adsbObs.php
+
+* http://www.flyingnut.com/adsbmap/
+
+#### Weather API:
+
+
+
 
 ---
 
