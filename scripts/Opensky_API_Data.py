@@ -11,9 +11,10 @@ and add record to the MySQL database """
 
 
 # Intervar to query the API
-x = 6*5
+x = 60*5
 # loop over to retrieve data every x seconds
 n = 0
+
 while True:
 
     try:
@@ -89,7 +90,3 @@ while True:
 
     except:
         print("Failed to retrieve data")
-        
-
-    
-        
