@@ -1,0 +1,1 @@
+SELECT * FROM project_2.airport_data;
