@@ -35,7 +35,7 @@ my_cursor = mydb.cursor()
 
 
 # Retrieve data and convert the tuples to a list
-my_cursor.execute(f"SELECT * FROM {database_name}.{table_name} ORDER BY id DESC LIMIT 25;")
+my_cursor.execute(f"SELECT * FROM {database_name}.{table_name} ORDER BY id DESC LIMIT 5;")
 list_records = []
 for records in my_cursor:
     list_records.append(records)

@@ -2,3 +2,5 @@ config.js
 .DS_Store
 .ipynb_checkpoints/
 scripts/__pycache__/
+__pycache__/
+api_keys.py

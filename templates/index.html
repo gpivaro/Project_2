@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Real-Time Air Traffic Map</title>
+
+  <!-- jQuery and JS bundle w/ Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  <!-- d3.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+  <!-- plotly -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
+
+  <!-- Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator -->
+  <script src="https://unpkg.com/leaflet"></script>
+  <script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
+</head>
+
+<body>
+
+  <h1>Real-Time Air Traffic Map</h1>
+
+  <p id="waitLoading" style="color: red;"></p>
+  <p>
+    Number of aircrafts currently on the map: <span id="numAircrafts" style="color: red;"></span>
+  </p>
+
+  <p>
+    Number of airports currently on the map: <span id="numAirports" style="color:green"></span>
+  </p>
+
+
+
+  <!-- The div where we will inject our map -->
+  <div id="map"></div>
+  <hr>
+  <div id="barChart"></div>
+  <hr>
+  <div id="scatterVelAltitude"></div>
+  <hr>
+  <div id="baroAltitudeHist"></div>
+  <hr>
+  <div id="positionSourcePlot"></div>
+
+  <hr>
+  <div id="barChartAirports"></div>
+
+
+
+
+
+  <!-- API key -->
+  <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
+  <!-- JS -->
+  <script type="text/javascript" src="static/js/logic.js"></script>
+</body>
+
+</html>
