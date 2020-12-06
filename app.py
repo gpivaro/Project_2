@@ -10,10 +10,12 @@ import json
 # from api_keys import mysql_user_project2
 # from api_keys import mysql_pass_project2
 
-mysql_hostname = os.environ['mysql_hostname']
-mysql_port = os.environ['mysql_port']
-mysql_user_project2 = os.environ['mysql_user_project2']
-mysql_pass_project2 = os.environ['mysql_pass_project2']
+mysql_hostname = os.environ('mysql_hostname')
+print(mysql_hostname)
+mysql_port = os.environ('mysql_port')
+print(mysql_port)
+mysql_user_project2 = os.environ('mysql_user_project2')
+mysql_pass_project2 = os.environ('mysql_pass_project2')
 
 
 # Database name and database tables
