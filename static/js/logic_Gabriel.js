@@ -25,11 +25,11 @@ var myMap = L.map("map", {
 // We use the addTo method to add objects to our map
 // Documentation for tileLayer:https://leafletjs.com/reference-1.6.0.html#tilelayer
 // L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-//   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-//   maxZoom: 18,
-//   id: "dark-v10",
-//   // id: "streets-v11",
-//   accessToken: API_KEY
+//     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+//     maxZoom: 18,
+//     id: "dark-v10",
+//     // id: "streets-v11",
+//     accessToken: API_KEY
 // }).addTo(myMap);
 
 
@@ -66,249 +66,207 @@ Documentation: https://opensky-network.org/apidoc/rest.html
  */
 url = "https://opensky-network.org/api/states/all";
 
+aircrafts_api_url = "/api/v1.0/aircrafts-data"
+d3.json(aircrafts_api_url).then((importedData) => {
+    // Store the imported data to a variable
 
-// d3.json(url).then((data) => {
-//     // Store the imported data to a variable
-//     console.log(data);
+    var flightData = importedData;
 
-//     // document.getElementById('waitLoading').textContent = "Wait... the map is being loaded!";
+    // console.log(flightData);
 
+    // Display on the screen the number of cleaned data points 
+    document.getElementById('numAircrafts').textContent = flightData.length;
 
-//     // Create and object with the data organized by key value pair
-//     var flightData = [];
-//     for (var i = 0; i < data.states.length; i++) {
-//         // conditional test to get only fligths with available location and not on the ground
-//         if (data.states[i][5] && !data.states[i][8]) {
-//             var time_position = new Date(data.states[i][3] * 1000);
-//             var last_contact = new Date(data.states[i][4] * 1000);
-//             // conditional test to label the position source method
-//             if (data.states[i][16] === 0) {
-//                 position_source = "ADS-B"
-//             }
-//             else if (data.states[i][16] === 1) {
-//                 position_source = "ASTERIX"
-//             }
-//             else {
-//                 position_source = "MLAT"
-//             }
-//             flightData.push({
-//                 "icao24": data.states[i][0],
-//                 "callsign": data.states[i][1],
-//                 "origin_country": data.states[i][2],
-//                 "time_position": time_position.toLocaleTimeString("en-US", options),
-//                 "last_contact": last_contact.toLocaleTimeString("en-US", options),
-//                 "longitude": data.states[i][5],
-//                 "latitude": data.states[i][6],
-//                 "baro_altitude": data.states[i][7],
-//                 "on_ground": data.states[i][8],
-//                 "velocity": data.states[i][9],
-//                 "true_track": data.states[i][10],
-//                 "vertical_rate": data.states[i][11],
-//                 "sensors": data.states[i][12],
-//                 "geo_altitude": data.states[i][13],
-//                 "squawk": data.states[i][14],
-//                 "spi": data.states[i][15],
-//                 "position_source": position_source
-//             });
-//         }
-//     };
+    // add marker to map for each flight
+    flightData.forEach(function (element) {
+        L.circle([element.latitude, element.longitude], {
+            fillOpacity: 0.75,
+            color: "red",
+            fillColor: "blue",
+            // Adjust radius
+            radius: 20000
+        }).bindPopup(`<h3>ICAO address: ${element["icao24"]}</h3><hr>
+    Callsign: ${element["callsign"]} <br/>
+    Origin country: ${element["origin_country"]}<br/>
+    Time of position update: ${element["time_position"]} (UTC)<br/>
+    Time of last update: ${element["last_contact"]} (UTC)<br/>
+    Longitude: ${element["longitude"]}<br/>
+    Latitude: ${element["latitude"]}<br/>
+    Altitude ${element["baro_altitude"]} m | ${Math.round(element["baro_altitude"] * 3.28084)} ft<br/>
+    On ground: ${element["on_ground"]}<br/>
+    Velocity: ${element["velocity"]} m/s | ${Math.round(element["velocity"] * 2.23694)} mph <br/>
+    True track: ${element["true_track"]}° (north=0°)<br/>
+    Vertical rate: ${element["vertical_rate"]} m/s<br/>
+    Sensors ID: ${element["sensors"]}<br/>
+    Geometric altitude: ${element["geo_altitude"]} m | ${Math.round(element["geo_altitude"] * 3.28084)} ft<br/>
+    Transponder code: ${element["squawk"]}<br/>
+    Special purpose indicator: ${element["spi"]}<br/>
+    Position_source: ${element["position_source"]}<br/>
+    For more details: <a href='https://flightaware.com/live/flight/${element["callsign"]}' target="_blank">link</a>
+  `, { "background": "#2c3e50" }).addTo(myMap);
 
-//     // print the object data
-//     // console.log(flightData.length);
-
-//     // Display on the screen the number of cleaned data points 
-//     document.getElementById('numAircrafts').textContent = flightData.length;
-
-//     // add marker to map for each flight
-//     flightData.forEach(function (element) {
-//         L.circle([element.latitude, element.longitude], {
-//             fillOpacity: 0.75,
-//             color: "red",
-//             fillColor: "blue",
-//             // Adjust radius
-//             radius: 20000
-//         }).bindPopup(`<h3>ICAO address: ${element["icao24"]}</h3><hr>
-//     Callsign: ${element["callsign"]} <br/>
-//     Origin country: ${element["origin_country"]}<br/>
-//     Time of position update: ${element["time_position"]} (UTC)<br/>
-//     Time of last update: ${element["last_contact"]} (UTC)<br/>
-//     Longitude: ${element["longitude"]}<br/>
-//     Latitude: ${element["latitude"]}<br/>
-//     Altitude ${element["baro_altitude"]} m | ${Math.round(element["baro_altitude"] * 3.28084)} ft<br/>
-//     On ground: ${element["on_ground"]}<br/>
-//     Velocity: ${element["velocity"]} m/s | ${Math.round(element["velocity"] * 2.23694)} mph <br/>
-//     True track: ${element["true_track"]}° (north=0°)<br/>
-//     Vertical rate: ${element["vertical_rate"]} m/s<br/>
-//     Sensors ID: ${element["sensors"]}<br/>
-//     Geometric altitude: ${element["geo_altitude"]} m | ${Math.round(element["geo_altitude"] * 3.28084)} ft<br/>
-//     Transponder code: ${element["squawk"]}<br/>
-//     Special purpose indicator: ${element["spi"]}<br/>
-//     Position_source: ${element["position_source"]}<br/>
-//     For more details: <a href='https://flightaware.com/live/flight/${element["callsign"]}' target="_blank">link</a>
-//   `, { "background": "#2c3e50" }).addTo(myMap);
-
-//     })
+    })
 
 
-//     // Create an array with the origin countries
-//     countrytData = [];
-//     for (var i = 0; i < flightData.length; i++) {
-//         // conditional test to get only fligths with
-//         if (countrytData.includes(flightData[i].origin_country)) {
-//             var n = 1;
-//         } else {
-//             countrytData.push(flightData[i].origin_country)
-//         }
-//     };
-//     // console.log(countrytData);
+    // Create an array with the origin countries
+    countrytData = [];
+    for (var i = 0; i < flightData.length; i++) {
+        // conditional test to get only fligths with
+        if (countrytData.includes(flightData[i].origin_country)) {
+            var n = 1;
+        } else {
+            countrytData.push(flightData[i].origin_country)
+        }
+    };
+    // console.log(countrytData);
 
 
-//     // Create an object with the aircrafts by origin country
-//     originCountryAircraft = [];
-//     for (var i = 0; i < countrytData.length; i++) {
-//         // conditional test to get only fligths with
-//         n = 0;
-//         for (var j = 0; j < flightData.length; j++) {
-//             if (countrytData[i] === flightData[j].origin_country) {
-//                 n += 1
-//             }
-//         }
-//         originCountryAircraft.push({ "country": countrytData[i], "aircrafts": n });
-//     };
-//     // console.log(originCountryAircraft);
+    // Create an object with the aircrafts by origin country
+    originCountryAircraft = [];
+    for (var i = 0; i < countrytData.length; i++) {
+        // conditional test to get only fligths with
+        n = 0;
+        for (var j = 0; j < flightData.length; j++) {
+            if (countrytData[i] === flightData[j].origin_country) {
+                n += 1
+            }
+        }
+        originCountryAircraft.push({ "country": countrytData[i], "aircrafts": n });
+    };
+    // console.log(originCountryAircraft);
 
 
-//     // Sort the samples in descending order of sample values
-//     originCountryAircraft.sort((a, b) => b.aircrafts - a.aircrafts);
-//     // Select the top origin country number of aircrafts
-//     top10originCountryAircraft = originCountryAircraft.slice(0, 10);
-//     // console.log(top10originCountryAircraft);
+    // Sort the samples in descending order of sample values
+    originCountryAircraft.sort((a, b) => b.aircrafts - a.aircrafts);
+    // Select the top origin country number of aircrafts
+    top10originCountryAircraft = originCountryAircraft.slice(0, 10);
+    // console.log(top10originCountryAircraft);
 
-//     // Reverse the list due to the Plotly requeriments
-//     top10originCountryAircraft.reverse()
+    // Reverse the list due to the Plotly requeriments
+    top10originCountryAircraft.reverse()
 
-//     // Trace1 to display the data
-//     var trace1 = {
-//         x: top10originCountryAircraft.map(element => element.aircrafts),
-//         y: top10originCountryAircraft.map(element => element.country),
-//         orientation: "h",
-//         type: "bar"
-//     };
+    // Trace1 to display the data
+    var trace1 = {
+        x: top10originCountryAircraft.map(element => element.aircrafts),
+        y: top10originCountryAircraft.map(element => element.country),
+        orientation: "h",
+        type: "bar"
+    };
 
-//     // create an array to be plotted
-//     var chartData = [trace1];
+    // create an array to be plotted
+    var chartData = [trace1];
 
 
 
-//     var layout = {
-//         title: "Aircraft by Country of Origin",
-//         xaxis: {
-//             title: "Number of aircrafts"
-//         },
-//         yaxis: {
-//             automargin: true,
-//         }
-//     }
+    var layout = {
+        title: "Aircraft by Country of Origin",
+        xaxis: {
+            title: "Number of aircrafts"
+        },
+        yaxis: {
+            automargin: true,
+        }
+    }
 
-//     // Render the plot to the div tag id "plot"
-//     Plotly.newPlot("barChart", chartData, layout, config, { displayModeBar: false });
-
-
-//     var trace2 = {
-//         x: flightData.map(element => element.baro_altitude * 3.28084),
-//         type: 'histogram',
-//     };
-//     var histData = [trace2];
+    // Render the plot to the div tag id "plot"
+    Plotly.newPlot("barChart", chartData, layout, config, { displayModeBar: false });
 
 
-//     var layout = {
-//         title: "Aircraft Altitude Distribution",
-//         xaxis: {
-//             title: "Altitude (ft) "
-//         },
-//         yaxis: {
-//             title: "Frequency",
-//             automargin: true,
-//         }
-//     };
-
-//     Plotly.newPlot('baroAltitudeHist', histData, layout, config, { displayModeBar: false });
+    var trace2 = {
+        x: flightData.map(element => element.baro_altitude * 3.28084),
+        type: 'histogram',
+    };
+    var histData = [trace2];
 
 
-//     var posSource = [];
-//     var ADSB = 0; var ASTERIX = 0; var MLAT = 0;
-//     for (var i = 0; i < flightData.length; i++) {
-//         // conditional test to get position source type
-//         if (flightData[i].position_source === "ADS-B") {
-//             ADSB += 1;
-//         }
-//         else if (flightData[i].position_source === "ASTERIX") {
-//             ASTERIX += 1;
-//         }
-//         else if (flightData[i].position_source === "MLAT") {
-//             MLAT += 1;
-//         }
-//     };
-//     posSource.push({ "Type": "ADS-B", "Qtd": ADSB }, { "Type": "ASTERIX", "Qtd": ASTERIX }, { "Type": "MLAT", "Qtd": MLAT });
-//     // console.log(posSource);
+    var layout = {
+        title: "Aircraft Altitude Distribution",
+        xaxis: {
+            title: "Altitude (ft) "
+        },
+        yaxis: {
+            title: "Frequency",
+            automargin: true,
+        }
+    };
+
+    Plotly.newPlot('baroAltitudeHist', histData, layout, config, { displayModeBar: false });
 
 
-//     // console.log(Object.entries(posSource));
-//     // console.log(Object.keys(posSource));
-
-//     var data = [{
-//         values: posSource.map(element => element.Qtd),
-//         labels: posSource.map(element => element.Type),
-//         // text: 'CO2',
-//         textposition: 'inside',
-//         domain: { column: 1 },
-//         // name: 'CO2 Emissions',
-//         hoverinfo: 'label+percent+name',
-//         hole: .4,
-//         type: 'pie'
-//     }];
-
-//     var layout = {
-//         title: 'Aircraft Position Source',
-//         height: 400,
-//         width: 600,
-//         showlegend: true,
-//         // grid: { rows: 1, columns: 1 }
-//     };
-
-//     Plotly.newPlot('positionSourcePlot', data, layout, config);
+    var posSource = [];
+    var ADSB = 0; var ASTERIX = 0; var MLAT = 0;
+    for (var i = 0; i < flightData.length; i++) {
+        // conditional test to get position source type
+        if (flightData[i].position_source === "ADS-B") {
+            ADSB += 1;
+        }
+        else if (flightData[i].position_source === "ASTERIX") {
+            ASTERIX += 1;
+        }
+        else if (flightData[i].position_source === "MLAT") {
+            MLAT += 1;
+        }
+    };
+    posSource.push({ "Type": "ADS-B", "Qtd": ADSB }, { "Type": "ASTERIX", "Qtd": ASTERIX }, { "Type": "MLAT", "Qtd": MLAT });
+    // console.log(posSource);
 
 
+    // console.log(Object.entries(posSource));
+    // console.log(Object.keys(posSource));
 
-//     var trace3 = {
-//         x: flightData.map(element => element.baro_altitude * 3.28084),
-//         y: flightData.map(element => element.velocity * 2.23694),
-//         // text: flightData.map(element => element.callsign),
-//         text: flightData,
-//         hovertemplate: 'Callsign: %{text.callsign}<extra></extra>' +
-//             '<br>Vertical rate: %{text.vertical_rate}',
-//         mode: 'markers',
-//         type: 'scatter'
-//     };
+    var data = [{
+        values: posSource.map(element => element.Qtd),
+        labels: posSource.map(element => element.Type),
+        // text: 'CO2',
+        textposition: 'inside',
+        domain: { column: 1 },
+        // name: 'CO2 Emissions',
+        hoverinfo: 'label+percent+name',
+        hole: .4,
+        type: 'pie'
+    }];
 
+    var layout = {
+        title: 'Aircraft Position Source',
+        height: 400,
+        width: 600,
+        showlegend: true,
+        // grid: { rows: 1, columns: 1 }
+    };
 
-//     var data = [trace3];
-
-//     var layout = {
-//         title: "Aircraft Speed vs. Altitude",
-//         xaxis: {
-//             title: "Altitude (ft) "
-//         },
-//         yaxis: {
-//             title: "Speed (mph) ",
-//             automargin: true,
-//         }
-//     }
-
-//     Plotly.newPlot('scatterVelAltitude', data, layout, config);
+    Plotly.newPlot('positionSourcePlot', data, layout, config);
 
 
-// });
+
+    var trace3 = {
+        x: flightData.map(element => element.baro_altitude * 3.28084),
+        y: flightData.map(element => element.velocity * 2.23694),
+        // text: flightData.map(element => element.callsign),
+        text: flightData,
+        hovertemplate: 'Callsign: %{text.callsign}<extra></extra>' +
+            '<br>Vertical rate: %{text.vertical_rate}',
+        mode: 'markers',
+        type: 'scatter'
+    };
+
+
+    var data = [trace3];
+
+    var layout = {
+        title: "Aircraft Speed vs. Altitude",
+        xaxis: {
+            title: "Altitude (ft) "
+        },
+        yaxis: {
+            title: "Speed (mph) ",
+            automargin: true,
+        }
+    }
+
+    Plotly.newPlot('scatterVelAltitude', data, layout, config);
+
+
+});
 
 
 
@@ -324,9 +282,10 @@ url = "https://opensky-network.org/api/states/all";
 /* ************************************************************************************************ */
 /* ************************************************************************************************ */
 
-airports_api_url = "http://0.0.0.0:5100/api/v1.0/airports-data"
+// API created for this project
+airports_api_url = "/api/v1.0/airports-data"
 d3.json(airports_api_url).then((importedData) => {
-    console.log(importedData);
+    // console.log(importedData);
 
     var airportData = importedData;
 
@@ -357,6 +316,7 @@ d3.json(airports_api_url).then((importedData) => {
         }
     });
 
+    document.getElementById('totalNumAirports').textContent = `${airportData.length}`;
 
     // Create an array with the airports by countries
     countryAirPorts = [];
@@ -388,11 +348,11 @@ d3.json(airports_api_url).then((importedData) => {
         return d.country === 'Brazil';
     };
 
-    var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
-    console.log(currentCountryAirport[0].airports);
-    // Display on the screen the number of cleaned data points 
-    document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}
-                                                  ${currentCountryAirport[0].airports}`;
+    // var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
+    // console.log(currentCountryAirport[0].airports);
+    // // Display on the screen the number of cleaned data points 
+    // document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}
+    // ${currentCountryAirport[0].airports} `;
 
 
     // Sort the samples in descending order of sample values
