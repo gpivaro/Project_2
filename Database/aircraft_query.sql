@@ -20,7 +20,15 @@ SELECT
 FROM
     project_2.aircraft_data
 WHERE
-    time = (SELECT 
+    longitude IS NOT NULL
+        AND time = (SELECT 
             MAX(time)
         FROM
             project_2.aircraft_data);
+            
+SELECT 
+    *
+FROM
+    project_2.aircraft_data
+WHERE
+    icao24 = 'a8aac8';

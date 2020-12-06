@@ -49,6 +49,8 @@ def api_routes():
         f"<h3>API routes available:</h3>"
         f"/aircrafts-data<br/>"
         f"/airports-data<br/>"
+        f"/api/v1.0/aircrafts-data/icao24/<icao24><br/>"
+        f"/api/v1.0/aircrafts-data/callsign/<callsign><br/>"
     )
 
 # Return a json with the query results for the aircrafts table
@@ -58,12 +60,16 @@ def api_aircrafts():
     # MySQL query to return all table elements that have not null latitute and have the newest time stamp
     aircraft_df = pd.read_sql(
         f"""
-        SELECT * 
-        FROM project_2.aircraft_data 
-        WHERE longitude IS NOT NULL
+        SELECT
+            * 
+        FROM 
+            {table_airplanes}
+        WHERE 
+            longitude IS NOT NULL
         AND 
-        time = (SELECT MAX(time) 
-        FROM project_2.aircraft_data);
+            time = (SELECT MAX(time) 
+        FROM 
+            {table_airplanes});
         """,
          engine)
 
@@ -76,11 +82,58 @@ def api_aircrafts():
 @app.route("/api/v1.0/airports-data")
 def api_airports():
 
-    airports_df = pd.read_sql(f"SELECT * FROM {table_airports} ORDER BY AirportID", engine)
+    airports_df = pd.read_sql(
+        f"""
+        SELECT 
+            * 
+        FROM 
+            {table_airports} 
+        ORDER BY 
+            AirportID;
+        """,
+         engine)
 
     result = airports_df.to_json(orient="records")
     parsed = json.loads(result)
 
+    return jsonify(parsed)
+
+# Return a json with the query results for the aircrafts table for a specific icao24
+@app.route("/api/v1.0/aircrafts-data/icao24/<icao24>")
+def api_aircrafts_icao24(icao24):
+
+    aircraft_df = pd.read_sql(
+        f"""
+        SELECT 
+            *
+        FROM
+            {table_airplanes}
+        WHERE
+            icao24 = '{str(icao24)}';
+        """,
+         engine)
+
+    result = aircraft_df.to_json(orient="records")
+    parsed = json.loads(result)
+
+
+# Return a json with the query results for the aircrafts table for a specific callsign
+@app.route("/api/v1.0/aircrafts-data/callsign/<callsign>")
+def api_aircrafts_callsign(callsign):
+
+    aircraft_df = pd.read_sql(
+        f"""
+        SELECT 
+            *
+        FROM
+            {table_airplanes}
+        WHERE
+            callsign = '{str(callsign)}';
+        """,
+         engine)
+
+    result = aircraft_df.to_json(orient="records")
+    parsed = json.loads(result)
     return jsonify(parsed)
 
 

@@ -11,7 +11,8 @@ var config = {
 };
 
 // Creating our initial map object
-// L.map accepts 2 arguments: id of the HTML element to insert the map, and an object containing the initial options for the new map
+/*L.map accepts 2 arguments: id of the HTML element to insert the map, 
+and an object containing the initial options for the new map */
 var myMap = L.map("map", {
     // For Houston uncomment:
     // center: [31.56, -96.47],
@@ -71,11 +72,13 @@ d3.json(aircrafts_api_url).then((importedData) => {
 
     var flightData = importedData;
 
+    // console.log(flightData);
+
+    // Retrieve the newest meas time and convert the format
     var newestData = new Date(flightData[0].time * 1000);
     var newestDataTime = newestData.toLocaleTimeString("en-US", timeOptions);
-    console.log(newestDataTime);
 
-    // console.log(flightData);
+
 
     // Display on the screen the number of cleaned data points 
     document.getElementById('numAircrafts').textContent = `${flightData.length} (${newestDataTime})`;
@@ -121,7 +124,6 @@ d3.json(aircrafts_api_url).then((importedData) => {
             countrytData.push(flightData[i].origin_country)
         }
     };
-    // console.log(countrytData);
 
 
     // Create an object with the aircrafts by origin country
@@ -136,7 +138,6 @@ d3.json(aircrafts_api_url).then((importedData) => {
         }
         originCountryAircraft.push({ "country": countrytData[i], "aircrafts": n });
     };
-    // console.log(originCountryAircraft);
 
 
     // Sort the samples in descending order of sample values
@@ -148,7 +149,8 @@ d3.json(aircrafts_api_url).then((importedData) => {
     // Reverse the list due to the Plotly requeriments
     top10originCountryAircraft.reverse()
 
-    // Trace1 to display the data
+
+    // Trace1 to display the Aircraft by Country of Origin chart
     var trace1 = {
         x: top10originCountryAircraft.map(element => element.aircrafts),
         y: top10originCountryAircraft.map(element => element.country),
@@ -158,8 +160,6 @@ d3.json(aircrafts_api_url).then((importedData) => {
 
     // create an array to be plotted
     var chartData = [trace1];
-
-
 
     var layout = {
         title: "Aircraft by Country of Origin",
@@ -175,6 +175,7 @@ d3.json(aircrafts_api_url).then((importedData) => {
     Plotly.newPlot("barChart", chartData, layout, config, { displayModeBar: false });
 
 
+    // Aircraft Altitude Distribution plot
     var trace2 = {
         x: flightData.map(element => element.baro_altitude * 3.28084),
         type: 'histogram',
@@ -195,35 +196,33 @@ d3.json(aircrafts_api_url).then((importedData) => {
 
     Plotly.newPlot('baroAltitudeHist', histData, layout, config, { displayModeBar: false });
 
-
+    // Data for position source chart
     var posSource = [];
     var ADSB = 0; var ASTERIX = 0; var MLAT = 0;
     for (var i = 0; i < flightData.length; i++) {
         // conditional test to get position source type
-        if (flightData[i].position_source === "ADS-B") {
+        if (flightData[i].position_source === 0) {
             ADSB += 1;
         }
-        else if (flightData[i].position_source === "ASTERIX") {
+        else if (flightData[i].position_source === 1) {
             ASTERIX += 1;
         }
-        else if (flightData[i].position_source === "MLAT") {
+        else if (flightData[i].position_source === 2) {
             MLAT += 1;
         }
     };
-    posSource.push({ "Type": "ADS-B", "Qtd": ADSB }, { "Type": "ASTERIX", "Qtd": ASTERIX }, { "Type": "MLAT", "Qtd": MLAT });
-    // console.log(posSource);
+    posSource.push(
+        { "Type": "ADS-B", "Qtd": ADSB },
+        { "Type": "ASTERIX", "Qtd": ASTERIX },
+        { "Type": "MLAT", "Qtd": MLAT }
+    );
 
-
-    // console.log(Object.entries(posSource));
-    // console.log(Object.keys(posSource));
-
+    // Position Source Chart
     var data = [{
         values: posSource.map(element => element.Qtd),
         labels: posSource.map(element => element.Type),
-        // text: 'CO2',
         textposition: 'inside',
         domain: { column: 1 },
-        // name: 'CO2 Emissions',
         hoverinfo: 'label+percent+name',
         hole: .4,
         type: 'pie'
@@ -240,7 +239,7 @@ d3.json(aircrafts_api_url).then((importedData) => {
     Plotly.newPlot('positionSourcePlot', data, layout, config);
 
 
-
+    // Aircraft Speed vs. Altitude Chart
     var trace3 = {
         x: flightData.map(element => element.baro_altitude * 3.28084),
         y: flightData.map(element => element.velocity * 2.23694),
@@ -251,7 +250,6 @@ d3.json(aircrafts_api_url).then((importedData) => {
         mode: 'markers',
         type: 'scatter'
     };
-
 
     var data = [trace3];
 
@@ -277,7 +275,6 @@ d3.json(aircrafts_api_url).then((importedData) => {
 
 
 
-// https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
 
 
 /* ************************************************************************************************ */
@@ -368,9 +365,8 @@ d3.json(airports_api_url).then((importedData) => {
     // Reverse the list due to the Plotly requeriments
     top10CountryAirports.reverse()
 
-    // console.log(top10CountryAirports);
 
-    // Trace1 to display the data
+    // Trace1 to display the Airport by Country Data
     var trace1 = {
         x: top10CountryAirports.map(element => element.airports),
         y: top10CountryAirports.map(element => element.country),
@@ -383,13 +379,6 @@ d3.json(airports_api_url).then((importedData) => {
 
     // create an array to be plotted
     var chartData = [trace1];
-
-
-    // Responsive chart
-    var config = {
-        responsive: true,
-        displayModeBar: false
-    };
 
     var layout = {
         title: "Airports by Country",
