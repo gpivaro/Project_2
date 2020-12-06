@@ -16,10 +16,10 @@ table_airplanes = "aircraft_data"
 table_airports = "airport_data"
 
 # MySQL specific connection string
-database_url = f"mysql+mysqlconnector://{mysql_user_project2}:{mysql_pass_project2}@{mysql_hostname}:{mysql_port}/{database_name}"
+database_uri = f"mysql+mysqlconnector://{mysql_user_project2}:{mysql_pass_project2}@{mysql_hostname}:{mysql_port}/{database_name}"
 
 # Create the engine to connect to the database
-engine = create_engine(database_url)
+engine = create_engine(database_uri)
 
 
 #################################################

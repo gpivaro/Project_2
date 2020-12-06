@@ -16,8 +16,11 @@ and an object containing the initial options for the new map */
 var myMap = L.map("map", {
     // For Houston uncomment:
     // center: [31.56, -96.47],
-    center: [0, 0],
-    zoom: 2.1,
+    // For IAH uncomment:
+    center: [29.984, -95.324],
+    zoom: 9,
+    // center: [0, 0],
+    // zoom: 2.1,
     scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
 });
 
@@ -94,7 +97,7 @@ d3.json(aircrafts_api_url).then((importedData) => {
             fillColor: "blue",
             // Adjust radius
             radius: 20000
-        }).bindPopup(`<h3>ICAO address: ${element["icao24"]}</h3><hr>
+        }).bindPopup(`<h5>ICAO address: ${element["icao24"]}</h5><hr>
     Callsign: ${element["callsign"]} <br/>
     Origin country: ${element["origin_country"]}<br/>
     Time of position update: ${element["time_position"]} (UTC)<br/>
