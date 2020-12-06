@@ -143,4 +143,4 @@ def api_aircrafts_callsign(callsign):
 # The server is set to run on the computer IP address on the port 5100
 # Go to your http://ipaddress:5100
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5100, debug=True)
+    app.run(debug=True)

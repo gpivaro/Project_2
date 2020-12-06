@@ -97,24 +97,25 @@ d3.json(aircrafts_api_url).then((importedData) => {
             fillColor: "blue",
             // Adjust radius
             radius: 20000
-        }).bindPopup(`<h5>ICAO address: ${element["icao24"]}</h5><hr>
-    Callsign: ${element["callsign"]} <br/>
-    Origin country: ${element["origin_country"]}<br/>
-    Time of position update: ${element["time_position"]} (UTC)<br/>
-    Time of last update: ${element["last_contact"]} (UTC)<br/>
-    Longitude: ${element["longitude"]}<br/>
-    Latitude: ${element["latitude"]}<br/>
-    Altitude ${element["baro_altitude"]} m | ${Math.round(element["baro_altitude"] * 3.28084)} ft<br/>
-    On ground: ${element["on_ground"]}<br/>
-    Velocity: ${element["velocity"]} m/s | ${Math.round(element["velocity"] * 2.23694)} mph <br/>
-    True track: ${element["true_track"]}° (north=0°)<br/>
-    Vertical rate: ${element["vertical_rate"]} m/s<br/>
-    Sensors ID: ${element["sensors"]}<br/>
-    Geometric altitude: ${element["geo_altitude"]} m | ${Math.round(element["geo_altitude"] * 3.28084)} ft<br/>
-    Transponder code: ${element["squawk"]}<br/>
-    Special purpose indicator: ${element["spi"]}<br/>
-    Position_source: ${element["position_source"]}<br/>
-    For more details: <a href='https://flightaware.com/live/flight/${element["callsign"]}' target="_blank">link</a>
+        }).bindPopup(`<h5>Aircraft Info:</h5><hr>
+        ICAO address: ${element["icao24"]}<br/>
+        Callsign: <a href='https://flightaware.com/resources/registration/${element["callsign"]}' target="_blank">${element["callsign"]}</a><br/>
+        Origin country: ${element["origin_country"]}<br/>
+        Time of position update: ${element["time_position"]} (UTC)<br/>
+        Time of last update: ${element["last_contact"]} (UTC)<br/>
+        Longitude: ${element["longitude"]}<br/>
+        Latitude: ${element["latitude"]}<br/>
+        Altitude ${element["baro_altitude"]} m | ${Math.round(element["baro_altitude"] * 3.28084)} ft<br/>
+        On ground: ${element["on_ground"]}<br/>
+        Velocity: ${element["velocity"]} m/s | ${Math.round(element["velocity"] * 2.23694)} mph <br/>
+        True track: ${element["true_track"]}° (north=0°)<br/>
+        Vertical rate: ${element["vertical_rate"]} m/s<br/>
+        Sensors ID: ${element["sensors"]}<br/>
+        Geometric altitude: ${element["geo_altitude"]} m | ${Math.round(element["geo_altitude"] * 3.28084)} ft<br/>
+        Transponder code: ${element["squawk"]}<br/>
+        Special purpose indicator: ${element["spi"]}<br/>
+        Position_source: ${element["position_source"]}<br/>
+        For more details: <a href='https://flightaware.com/live/flight/${element["callsign"]}' target="_blank">link</a>
   `, { "background": "#2c3e50" }).addTo(myMap);
 
     })

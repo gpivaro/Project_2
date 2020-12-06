@@ -4,6 +4,12 @@
 
 * https://openflights.org/data.html#airport
 
+* https://www.airport-data.com/
+
+* https://www.airport-data.com/api/doc.php
+
+* http://www.flyingnut.com/adsbmap/grids/aircraft.html
+
 * https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat
 
 * https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json
@@ -20,7 +26,9 @@
 
 * http://www.flyingnut.com/adsbmap/
 
-* // https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
+* https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
+
+* https://www.airport-data.com/aircraft/N139CH.html
 
 #### Weather API:
 
