@@ -55,8 +55,9 @@ sqlStuff = f"""INSERT INTO {table_name} (icao24,
                                         geo_altitude,
                                         squawk,
                                         spi,
-                                        position_source)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s) """
+                                        position_source,
+                                        time)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
 
 
 # Save the record to the database

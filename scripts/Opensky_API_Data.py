@@ -1,7 +1,7 @@
 import requests
 import time
 from datetime import datetime
-from MySQL_Connect import add_to_database
+from MySQL_Add import add_to_database
 
 
 """ Query the live aircraft data from Opensky API  
@@ -29,7 +29,7 @@ try:
 
     # Test for null and strip spaces in case not null
     for i in range(len(response["states"])):
-        aircraft_live_data = list(range(0,17))
+        aircraft_live_data = list(range(0,18))
         if response["states"][i][0]:
             aircraft_live_data[0] = response["states"][i][0].strip()
         else:
@@ -59,6 +59,7 @@ try:
             aircraft_live_data[14] =  response["states"][i][14]
         aircraft_live_data[15] =  response["states"][i][15]
         aircraft_live_data[16]  = response["states"][i][16]
+        aircraft_live_data[17] = response["time"]
 
         record1 = (aircraft_live_data[0], 
                     aircraft_live_data[1],
@@ -76,7 +77,8 @@ try:
                     aircraft_live_data[13],
                     aircraft_live_data[14],
                     aircraft_live_data[15],
-                    aircraft_live_data[16]
+                    aircraft_live_data[16],
+                    aircraft_live_data[17]
                     )
 
         add_to_database(record1)
