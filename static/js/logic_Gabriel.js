@@ -49,8 +49,8 @@ L.terminator().addTo(myMap);
 
 /* Date.prototype.toLocaleDateString()
      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
-var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-options.timeZone = 'UTC';
+var timeOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+// timeOptions.timeZone = 'UTC';
 
 
 /* ************************************************************************************************ */
@@ -64,7 +64,6 @@ This is the official documentation of the OpenSky Network’s live API.
 The API lets you retrieve live airspace information for research and non-commerical purposes. 
 Documentation: https://opensky-network.org/apidoc/rest.html
  */
-url = "https://opensky-network.org/api/states/all";
 
 aircrafts_api_url = "/api/v1.0/aircrafts-data"
 d3.json(aircrafts_api_url).then((importedData) => {
@@ -72,10 +71,14 @@ d3.json(aircrafts_api_url).then((importedData) => {
 
     var flightData = importedData;
 
+    var newestData = new Date(flightData[0].time * 1000);
+    var newestDataTime = newestData.toLocaleTimeString("en-US", timeOptions);
+    console.log(newestDataTime);
+
     // console.log(flightData);
 
     // Display on the screen the number of cleaned data points 
-    document.getElementById('numAircrafts').textContent = flightData.length;
+    document.getElementById('numAircrafts').textContent = `${flightData.length} (${newestDataTime})`;
 
     // add marker to map for each flight
     flightData.forEach(function (element) {

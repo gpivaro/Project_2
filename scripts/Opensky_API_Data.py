@@ -1,21 +1,11 @@
 import requests
 import time
 from datetime import datetime
-from MySQL_Add import add_to_database
+from MySQL_Add import add_to_database, add_many_database
 
 
 """ Query the live aircraft data from Opensky API  
 and add record to the MySQL database """
-
-
-
-# Intervar to query the API
-x = 60*5
-# loop over to retrieve data every x seconds
-n = 0
-
-# while True:
-
 try:
     # Save config information.
     url = "https://opensky-network.org/api/states/all"
@@ -26,7 +16,7 @@ try:
     #  Perform a request for data
     response = requests.get(query_url).json()
 
-
+    list_records = []
     # Test for null and strip spaces in case not null
     for i in range(len(response["states"])):
         aircraft_live_data = list(range(0,18))
@@ -81,13 +71,19 @@ try:
                     aircraft_live_data[17]
                     )
 
-        add_to_database(record1)
+        # add_to_database(record1)
 
-    n += 1
+        # create a list of tuples to be added to the database
+        list_records.append(record1)
+    
+    # add multiple records to the database at the same time
+    add_many_database(list_records)
+
+
     print("---------------------")
     dt_object = datetime.fromtimestamp(response["time"])
-    print(f"{n} | At: {dt_object} | Total data points retrieved: {len(response['states'])}")
-    # time.sleep(x)
+    print(f"At: {dt_object} | Total data points retrieved: {len(response['states'])}")
+
 
 except:
     print("Failed to retrieve data")

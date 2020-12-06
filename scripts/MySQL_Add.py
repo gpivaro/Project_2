@@ -60,7 +60,8 @@ sqlStuff = f"""INSERT INTO {table_name} (icao24,
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
 
 
-# Save the record to the database
+# Save the record to the database 
+# single element at the time
 def add_to_database(data):
     try:
         # Add records to the database
@@ -70,5 +71,21 @@ def add_to_database(data):
         mydb.commit()
 
         # print('Record Added to DB')
+    except:
+        print('Error Saving to DB')
+
+
+
+# Save the record to the database with 
+# multiple records at the same time
+def add_many_database(data):
+    try:
+        # Add records to the database
+        my_cursor.executemany(sqlStuff, data)
+
+        # Commit changes to the database
+        mydb.commit()
+
+        print('Record Added to DB')
     except:
         print('Error Saving to DB')
