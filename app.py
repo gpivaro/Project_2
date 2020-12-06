@@ -16,10 +16,11 @@ table_airplanes = "aircraft_data"
 table_airports = "airport_data"
 
 
+# MySQL database info
 database_url = f"mysql+mysqlconnector://{mysql_user_project2}:{mysql_pass_project2}@{mysql_hostname}:{mysql_port}/{database_name}"
 
 
-# Create the engine
+# Create the engine to connect to the database
 engine = create_engine(database_url)
 
 
@@ -42,6 +43,15 @@ def welcome():
     return render_template("index.html")
 
 
+# Return the APIs route available
+@app.route("/api/v1.0/")
+def api_routes():
+
+    return (
+        f"<h3>API routes available:</h3>"
+        f"/aircrafts-data<br/>"
+        f"/airports-data<br/>"
+    )
 
 # Return a json with the query results for the aircrafts table
 @app.route("/api/v1.0/aircrafts-data")

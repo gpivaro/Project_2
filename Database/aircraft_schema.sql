@@ -19,5 +19,6 @@ CREATE TABLE `project_2`.`aircraft_data` (
     squawk VARCHAR(20),
     spi BOOLEAN,
     position_source INT,
+    time INT,
     PRIMARY KEY (id)
 );
