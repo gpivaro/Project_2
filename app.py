@@ -69,7 +69,10 @@ def api_aircrafts():
         AND 
             time = (SELECT MAX(time) 
         FROM 
-            {table_airplanes});
+            {table_airplanes})
+        ORDER BY 
+            id
+        DESC;
         """,
          engine)
 

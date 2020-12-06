@@ -78,10 +78,13 @@ d3.json(aircrafts_api_url).then((importedData) => {
     var newestData = new Date(flightData[0].time * 1000);
     var newestDataTime = newestData.toLocaleTimeString("en-US", timeOptions);
 
-
+    // Display on the screen the number of aircraft currently on the maps
+    document.getElementById('numAircrafts').textContent = `${flightData.length} (${newestDataTime})`;
 
     // Display on the screen the number of cleaned data points 
-    document.getElementById('numAircrafts').textContent = `${flightData.length} (${newestDataTime})`;
+    document.getElementById('totalAircraftDatabase').textContent = `${flightData[0].id}`;
+
+    totalAircraftDatabase
 
     // add marker to map for each flight
     flightData.forEach(function (element) {
