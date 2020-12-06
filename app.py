@@ -10,12 +10,13 @@ import json
 # from api_keys import mysql_user_project2
 # from api_keys import mysql_pass_project2
 
-mysql_hostname = os.environ['MYSQL_HOSTNAME']
-print(mysql_hostname)
-mysql_port = os.environ['MYSQL_PORT']
-print(mysql_port)
-mysql_user_project2 = os.environ['MYSQL_USERNAME']
-mysql_pass_project2 = os.environ['MYSQL_PASSWORD']
+# mysql_hostname = os.environ['MYSQL_HOSTNAME']
+# print(mysql_hostname)
+# mysql_port = os.environ['MYSQL_PORT']
+# print(mysql_port)
+# mysql_user_project2 = os.environ['MYSQL_USERNAME']
+# mysql_pass_project2 = os.environ['MYSQL_PASSWORD']
+
 
 
 # Database name and database tables
@@ -24,12 +25,12 @@ table_airplanes = "aircraft_data"
 table_airports = "airport_data"
 
 # MySQL specific connection string
-database_uri = f"""mysql+mysqlconnector://
-                    {mysql_user_project2}:
-                    {mysql_pass_project2}@
-                    {mysql_hostname}:
-                    {mysql_port}/
-                    {database_name}"""
+try:
+    database_uri = os.environ['DATABASE_URL']
+except KeyboardInterrupt:
+    database_uri = f"mysql+mysqlconnector://{mysql_user_project2}:{mysql_pass_project2}@{mysql_hostname}:{mysql_port}/{database_name}"
+
+print(database_uri)
 
 # Create the engine to connect to the database
 engine = create_engine(database_uri)
