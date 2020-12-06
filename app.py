@@ -55,7 +55,17 @@ def api_routes():
 @app.route("/api/v1.0/aircrafts-data")
 def api_aircrafts():
 
-    aircraft_df = pd.read_sql(f"SELECT * FROM {table_airplanes} ORDER BY id DESC LIMIT 15", engine)
+    # MySQL query to return all table elements that have not null latitute and have the newest time stamp
+    aircraft_df = pd.read_sql(
+        f"""
+        SELECT * 
+        FROM project_2.aircraft_data 
+        WHERE longitude IS NOT NULL
+        AND 
+        time = (SELECT MAX(time) 
+        FROM project_2.aircraft_data);
+        """,
+         engine)
 
     result = aircraft_df.to_json(orient="records")
     parsed = json.loads(result)
