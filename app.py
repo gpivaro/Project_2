@@ -4,21 +4,19 @@ import pandas as pd
 import os
 import json
 
-# Import DB user and password
+# Import database user and password
 from api_keys import mysql_hostname
 from api_keys import mysql_port
 from api_keys import mysql_user_project2
 from api_keys import mysql_pass_project2
 
-# MySQL specific connection string
+# Database name and database tables
 database_name = "project_2"
 table_airplanes = "aircraft_data"
 table_airports = "airport_data"
 
-
-# MySQL database info
+# MySQL specific connection string
 database_url = f"mysql+mysqlconnector://{mysql_user_project2}:{mysql_pass_project2}@{mysql_hostname}:{mysql_port}/{database_name}"
-
 
 # Create the engine to connect to the database
 engine = create_engine(database_url)
@@ -40,7 +38,7 @@ app = Flask(__name__)
 # Home page.
 @app.route("/")
 def welcome():
-    return render_template("index.html")
+    return render_template("index_Gabriel.html")
 
 
 # Return the APIs route available
@@ -68,7 +66,7 @@ def api_aircrafts():
 @app.route("/api/v1.0/airports-data")
 def api_airports():
 
-    airports_df = pd.read_sql(f"SELECT * FROM {table_airports} ORDER BY AirportID DESC LIMIT 15", engine)
+    airports_df = pd.read_sql(f"SELECT * FROM {table_airports} ORDER BY AirportID", engine)
 
     result = airports_df.to_json(orient="records")
     parsed = json.loads(result)
