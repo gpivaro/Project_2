@@ -46,7 +46,7 @@ app = Flask(__name__)
 #################################################
 # Use Flask to create your routes.
 
-# Routes
+# Route
 
 
 # Home page.
