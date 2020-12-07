@@ -17,10 +17,10 @@ var myMap = L.map("map", {
     // For Houston uncomment:
     // center: [31.56, -96.47],
     // For IAH uncomment:
-    center: [29.984, -95.324],
-    zoom: 9,
-    // center: [0, 0],
-    // zoom: 2.1,
+    // center: [29.984, -95.324],
+    // zoom: 9,
+    center: [0, 0],
+    zoom: 2.1,
     scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
 });
 
