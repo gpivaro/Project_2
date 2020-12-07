@@ -4,18 +4,18 @@ import pandas as pd
 import os
 import json
 
-# Import database user and password
-# from api_keys import mysql_hostname
-# from api_keys import mysql_port
-# from api_keys import mysql_user_project2
-# from api_keys import mysql_pass_project2
+Import database user and password
+from api_keys import mysql_hostname
+from api_keys import mysql_port
+from api_keys import mysql_user_project2
+from api_keys import mysql_pass_project2
 
-# mysql_hostname = os.environ['MYSQL_HOSTNAME']
-# print(mysql_hostname)
-# mysql_port = os.environ['MYSQL_PORT']
-# print(mysql_port)
-# mysql_user_project2 = os.environ['MYSQL_USERNAME']
-# mysql_pass_project2 = os.environ['MYSQL_PASSWORD']
+mysql_hostname = os.environ['MYSQL_HOSTNAME']
+print(mysql_hostname)
+mysql_port = os.environ['MYSQL_PORT']
+print(mysql_port)
+mysql_user_project2 = os.environ['MYSQL_USERNAME']
+mysql_pass_project2 = os.environ['MYSQL_PASSWORD']
 
 
 
