@@ -1,7 +1,7 @@
 import mysql.connector
 import json
 
-""" Function to connect to the MySQL database and add one record to the database """
+#Function to connect to the MySQL database and add one record to the database """
 
 # Database variables:
 database_name = "project_2"  # the name of the target database
