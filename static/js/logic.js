@@ -104,8 +104,10 @@ d3.json(url).then((data) => {
   // print the object data
   // console.log(flightData.length);
 
+  var totalFlightMap = flightData.length;
+  
   // Display on the screen the number of cleaned data points 
-  document.getElementById('numAircrafts').textContent = flightData.length;
+  document.getElementById('numAircrafts').textContent = totalFlightMap.toLocaleString();
 
   // add marker to map for each flight
   flightData.forEach(function (element) {
@@ -378,7 +380,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   console.log(currentCountryAirport[0].airports);
   // Display on the screen the number of cleaned data points 
   document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}
-                                                  ${currentCountryAirport[0].airports}`;
+                                                  ${currentCountryAirport[0].airports.toLocaleString()}`;
 
 
   // Sort the samples in descending order of sample values
