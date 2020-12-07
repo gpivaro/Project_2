@@ -48,7 +48,7 @@ app = Flask(__name__)
 
 # Routes
 
-# /
+
 # Home page.
 @app.route("/")
 def welcome():
