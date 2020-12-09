@@ -14,6 +14,21 @@ var myMap = L.map("map", {
   scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
 });
 
+//   Markers With Custom Icons
+  var aircraftIcon = L.icon({
+    iconUrl: 'Resources/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
+    
+    iconSize:     [38/3, 95/3], // size of the icon
+//     shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+//     shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+  
+//   Now putting a marker with this icon on a map
+//   L.marker([0, 0], {icon: aircraftIcon}).addTo(myMap);
+  
+
 // Adding a tile layer (the background map image) to our map.
 // Leaflet doesn't have out-of-the-box tile layers, but it allows us to usetile layer APIs. Here, we're using mapbox.
 // We use the addTo method to add objects to our map
@@ -104,17 +119,20 @@ d3.json(url).then((data) => {
   // print the object data
   // console.log(flightData.length);
 
+  var totalFlightMap = flightData.length;
+  
   // Display on the screen the number of cleaned data points 
-  document.getElementById('numAircrafts').textContent = flightData.length;
+  document.getElementById('numAircrafts').textContent = totalFlightMap.toLocaleString();
 
   // add marker to map for each flight
   flightData.forEach(function (element) {
-    L.circle([element.latitude, element.longitude], {
-      fillOpacity: 0.75,
-      color: "red",
-      fillColor: "blue",
+    L.marker([element.latitude, element.longitude], {
+      icon: aircraftIcon,
+//       fillOpacity: 0.75,
+//       color: "red",
+//       fillColor: "blue",
       // Adjust radius
-      radius: 20000
+//       radius: 20000
     }).bindPopup(`<h3>ICAO address: ${element["icao24"]}</h3><hr>
     Callsign: ${element["callsign"]} <br/>
     Origin country: ${element["origin_country"]}<br/>
@@ -137,6 +155,13 @@ d3.json(url).then((data) => {
 
   })
 
+
+   
+  
+  
+  
+  
+  
 
   // Create an array with the origin countries
   countrytData = [];
@@ -378,7 +403,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   console.log(currentCountryAirport[0].airports);
   // Display on the screen the number of cleaned data points 
   document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}
-                                                  ${currentCountryAirport[0].airports}`;
+                                                  ${currentCountryAirport[0].airports.toLocaleString()}`;
 
 
   // Sort the samples in descending order of sample values
