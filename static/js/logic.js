@@ -1,8 +1,8 @@
 // Responsive chart and hide control buttons on Plotly charts
-  var config = { 
-                responsive: true,
-               displayModeBar: false
-               };
+var config = {
+  responsive: true,
+  displayModeBar: false
+};
 
 // Creating our initial map object
 // L.map accepts 2 arguments: id of the HTML element to insert the map, and an object containing the initial options for the new map
@@ -15,19 +15,19 @@ var myMap = L.map("map", {
 });
 
 //   Markers With Custom Icons
-  var aircraftIcon = L.icon({
-    iconUrl: 'Resources/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
-    
-    iconSize:     [38/3, 95/3], // size of the icon
-//     shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-//     shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+var aircraftIcon = L.icon({
+  iconUrl: 'static/images/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
+
+  iconSize: [38 / 3, 95 / 3], // size of the icon
+  //     shadowSize:   [50, 64], // size of the shadow
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  //     shadowAnchor: [4, 62],  // the same for the shadow
+  popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
-  
+
 //   Now putting a marker with this icon on a map
 //   L.marker([0, 0], {icon: aircraftIcon}).addTo(myMap);
-  
+
 
 // Adding a tile layer (the background map image) to our map.
 // Leaflet doesn't have out-of-the-box tile layers, but it allows us to usetile layer APIs. Here, we're using mapbox.
@@ -120,7 +120,7 @@ d3.json(url).then((data) => {
   // console.log(flightData.length);
 
   var totalFlightMap = flightData.length;
-  
+
   // Display on the screen the number of cleaned data points 
   document.getElementById('numAircrafts').textContent = totalFlightMap.toLocaleString();
 
@@ -128,11 +128,11 @@ d3.json(url).then((data) => {
   flightData.forEach(function (element) {
     L.marker([element.latitude, element.longitude], {
       icon: aircraftIcon,
-//       fillOpacity: 0.75,
-//       color: "red",
-//       fillColor: "blue",
+      //       fillOpacity: 0.75,
+      //       color: "red",
+      //       fillColor: "blue",
       // Adjust radius
-//       radius: 20000
+      //       radius: 20000
     }).bindPopup(`<h3>ICAO address: ${element["icao24"]}</h3><hr>
     Callsign: ${element["callsign"]} <br/>
     Origin country: ${element["origin_country"]}<br/>
@@ -156,12 +156,12 @@ d3.json(url).then((data) => {
   })
 
 
-   
-  
-  
-  
-  
-  
+
+
+
+
+
+
 
   // Create an array with the origin countries
   countrytData = [];
@@ -212,7 +212,7 @@ d3.json(url).then((data) => {
   var chartData = [trace1];
 
 
-  
+
   var layout = {
     title: "Aircraft by Country of Origin",
     xaxis: {
@@ -434,9 +434,10 @@ d3.csv("data/airports.csv").then((importedData) => {
 
 
   // Responsive chart
-  var config = { responsive: true,
-               displayModeBar: false
-               };
+  var config = {
+    responsive: true,
+    displayModeBar: false
+  };
 
   var layout = {
     title: "Airports by Country",

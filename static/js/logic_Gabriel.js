@@ -87,7 +87,6 @@ d3.json(aircrafts_api_url).then((importedData) => {
     // Display on the screen the number of cleaned data points 
     document.getElementById('totalAircraftDatabase').textContent = `${flightData[0].id}`;
 
-    totalAircraftDatabase
 
     // add marker to map for each flight
     flightData.forEach(function (element) {

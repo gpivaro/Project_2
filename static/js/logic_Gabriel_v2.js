@@ -28,7 +28,7 @@ var timeOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
 //   Markers With Custom Icons
 var aircraftIcon = L.icon({
-    iconUrl: 'Resources/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
+    iconUrl: '/static/images/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
 
     iconSize: [38 / 3, 95 / 3], // size of the icon
     //     shadowSize:   [50, 64], // size of the shadow
@@ -68,12 +68,13 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
             // add marker to map for each flight
             aircrafts = []
             flightData.forEach(function (element) {
-                circles = L.circle([element.latitude, element.longitude], {
-                    fillOpacity: 0.75,
-                    color: "red",
-                    fillColor: "blue",
+                circles = L.marker([element.latitude, element.longitude], {
+                    icon: aircraftIcon,
+                    // fillOpacity: 0.75,
+                    // color: "red",
+                    // fillColor: "blue",
                     // Adjust radius
-                    radius: 20000
+                    // radius: 20000
                 }).bindPopup(`<h5>Aircraft Info:</h5><hr>
                             ICAO address: ${element["icao24"]}<br/>
                             Callsign: <a href='https://flightaware.com/resources/registration/${element["callsign"]}' target="_blank">${element["callsign"]}</a><br/>
