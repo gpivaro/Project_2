@@ -141,7 +141,7 @@ d3.json(url).then((data) => {
 
 //   Markers With Custom Icons
   var aircraftIcon = L.icon({
-    iconUrl: '/Resources/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
+    iconUrl: 'Resources/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
     
     iconSize:     [38, 95], // size of the icon
     shadowSize:   [50, 64], // size of the shadow
