@@ -5,10 +5,10 @@ import os
 import json
 
 # Import database user and password
-# from api_keys import mysql_hostname
-# from api_keys import mysql_port
-# from api_keys import mysql_user_project2
-# from api_keys import mysql_pass_project2
+from api_keys import mysql_hostname
+from api_keys import mysql_port
+from api_keys import mysql_user_project2
+from api_keys import mysql_pass_project2
 
 # mysql_hostname = os.environ['MYSQL_HOSTNAME']
 # print(mysql_hostname)
@@ -27,7 +27,7 @@ table_airports = "airport_data"
 # MySQL specific connection string
 try:
     database_uri = os.environ['DATABASE_URL']
-except KeyboardInterrupt:
+except KeyError:
     database_uri = f"mysql+mysqlconnector://{mysql_user_project2}:{mysql_pass_project2}@{mysql_hostname}:{mysql_port}/{database_name}"
 
 print(database_uri)
