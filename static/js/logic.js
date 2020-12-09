@@ -151,7 +151,7 @@ d3.json(url).then((data) => {
 });
   
 //   Now putting a marker with this icon on a map
-  L.marker([0, 0], {icon: aircraftIcon}).addTo(map);
+  L.marker([0, 0], {icon: aircraftIcon}).addTo(myMap);
   
    
   
