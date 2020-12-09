@@ -43,41 +43,37 @@
 
 <body>
 
-  <h1>Real-Time Air Traffic Map</h1>
-
-  <p id="waitLoading" style="color: red;"></p>
-  <p>
-    Number of aircrafts currently on the map: <span id="numAircrafts" style="color: red;"></span>
-  </p>
-
-  <p>
-    Number aircraft records on database: <span id="totalAircraftDatabase" style="font-weight: bold;"></span>
-  </p>
-  <p>
-    Number of airports currently on the map: <span id="totalNumAirports" style="color:green"></span>
-  </p>
-
+  <div style="margin-left: 2%; margin-top:1%">
+    <h1>Real-Time Air Traffic Map</h1>
+    <p>
+      Number of aircrafts on the map: <span id="numAircrafts" style="color: red; font-weight: bold;"></span>
+    </p>
+    <p>
+      Number aircraft records on the database: <span id="totalAircraftDatabase" style="font-weight: bold;"></span>
+    </p>
+    <p>
+      Number of airports on the database: <span id="totalNumAirports" style="font-weight: bold; color:green"></span>
+    </p>
+  </div>
 
 
-
-  <!-- The div where we will inject our map -->
-  <div id="map"></div>
-  <hr>
-  <div id="barChart"></div>
-  <hr>
-  <div id="scatterVelAltitude"></div>
-  <hr>
-  <div id="baroAltitudeHist"></div>
-  <hr>
-  <div id="positionSourcePlot"></div>
-
-  <hr>
-  <div id="barChartAirports"></div>
-
-
-  <canvas id="myChart" width="400" height="400"></canvas>
-
-
+  <div class="plots">
+    <!-- The div where we will inject our map -->
+    <div id="map"></div>
+    <hr>
+    <div id="barChart"></div>
+    <hr>
+    <div id="scatterVelAltitude"></div>
+    <hr>
+    <div id="baroAltitudeHist"></div>
+    <hr>
+    <div id="positionSourcePlot"></div>
+    <hr>
+    <div id="barChartAirports"></div>
+    <hr>
+    <!-- Canvas for ChartsJS plot -->
+    <canvas id="myChart" width="300" height="100"></canvas>
+  </div>
   <!-- API key -->
   <script type="text/javascript" src="static/js/config.js"></script>
   <!-- JS -->

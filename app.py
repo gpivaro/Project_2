@@ -4,11 +4,11 @@ import pandas as pd
 import os
 import json
 
-# Import database user and password
-from api_keys import mysql_hostname
-from api_keys import mysql_port
-from api_keys import mysql_user_project2
-from api_keys import mysql_pass_project2
+# # Import database user and password
+# from api_keys import mysql_hostname
+# from api_keys import mysql_port
+# from api_keys import mysql_user_project2
+# from api_keys import mysql_pass_project2
 
 # mysql_hostname = os.environ['MYSQL_HOSTNAME']
 # print(mysql_hostname)
@@ -65,6 +65,7 @@ def api_routes():
         f"/airports-data<br/>"
         f"/api/v1.0/aircrafts-data/icao24/<icao24><br/>"
         f"/api/v1.0/aircrafts-data/callsign/<callsign><br/>"
+        f"/api/v1.0/aircrafts-data/byhour"
     )
 
 # Return a json with the query results for the aircrafts table
@@ -154,7 +155,30 @@ def api_aircrafts_callsign(callsign):
     return jsonify(parsed)
 
 
+# Return a json with the query results for the aircrafts table for a specific callsign
+@app.route("/api/v1.0/aircrafts-data/byhour")
+def api_aircrafts_byhour():
+
+    aircraft_hour = pd.read_sql(
+        f"""
+        SELECT 
+            COUNT(*) AS totalDataPoints,
+            FROM_UNIXTIME(time, '%Y-%m-%d %H') AS timeData
+        FROM
+            {table_airplanes}
+        GROUP BY FROM_UNIXTIME(time, '%Y-%m-%d %H');
+        """,
+         engine)
+
+    result = aircraft_hour.to_json(orient="records")
+    parsed = json.loads(result)
+    return jsonify(parsed)
+
 # The server is set to run on the computer IP address on the port 5100
 # Go to your http://ipaddress:5100
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+    

@@ -32,3 +32,25 @@ FROM
     project_2.aircraft_data
 WHERE
     icao24 = 'a8aac8';
+    
+    
+-- SELECT 
+--     COUNT(*), dataday = DAY()
+-- FROM
+--     project_2.aircraft_data
+-- GROUP BY dataday;
+
+SELECT 
+    FROM_UNIXTIME(time,'%Y-%m-%d %H:%i:%s')
+FROM
+    project_2.aircraft_data
+LIMIT 5000;
+
+
+-- Count the total data per hour  
+SELECT 
+    COUNT(*) AS totalDataPoints,
+    FROM_UNIXTIME(time, '%Y-%m-%d %H') AS timeData
+FROM
+    project_2.aircraft_data
+GROUP BY FROM_UNIXTIME(time, '%Y-%m-%d %H');
