@@ -139,6 +139,26 @@ d3.json(url).then((data) => {
 
   })
 
+//   Markers With Custom Icons
+  var aircraftIcon = L.icon({
+    iconUrl: '/Resources/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
+    
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+  
+//   Now putting a marker with this icon on a map
+  L.marker([0, 0], {icon: aircraftIcon}).addTo(map);
+  
+   
+  
+  
+  
+  
+  
 
   // Create an array with the origin countries
   countrytData = [];
