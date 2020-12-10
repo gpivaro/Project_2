@@ -454,3 +454,20 @@ d3.csv("data/airports.csv").then((importedData) => {
 });
 
 // https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
+
+// Handler for the dropdown change
+d3.select('#selDataset').on('change', consolo.log('Selected'));
+
+// // Event listen to update page based on the dropdown selection
+// function updatePage() {
+
+//     var dropdown = d3.select('#selDataset');
+//     var dropdownValue = dropdown.property('value');
+//     // console.log(dropdownValue);
+
+//     // Parse the dropdown values as integer
+//     var SubjectID = parseInt(dropdownValue);
+
+//     // Build the plot with the new stock
+//     buildPlot(SubjectID);
+// };
