@@ -114,7 +114,7 @@ function createMarker(data) {
     data.forEach(element => {
         // console.log([element.latitude, element.longitude]);
         var marker = L.circle([element.latitude, element.longitude], {
-            radius: 15,
+            radius: 5000,
             color: "red"
         }).bindPopup(`<h5>Aircraft Info:</h5><hr>
                             ICAO address: ${element["icao24"]}<br/>
@@ -197,10 +197,16 @@ d3.select('#selectCallsign').on('change', updatePageCallsign);
 
 loadDropdown();
 
-var mapAirplanes = L.map('mapAircraft').setView([1, -0.09], 2);
+var mapAirplanes = L.map('mapAircraft', {
+    scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
+}).setView([1, -0.09], 2);
 var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
+
+// var baseLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+//     attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+// });
 
 icao24 = '42499a'
 getDataICAO(icao24);

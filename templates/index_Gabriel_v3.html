@@ -39,6 +39,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
+    <!-- Turf.js -->
+    <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
 </head>
 
 <body>
@@ -55,13 +57,29 @@
             Number of airports on the database: <span id="totalNumAirports"
                 style="font-weight: bold; color:green"></span>
         </p>
+
+        <div id="map"></div>
     </div>
 
-
+    <div>
+        <div style="margin-left: 2%; margin-top:1%">
+            <h1>Aircraft Analysis</h1>
+            <label for="cars">Choose a ICAO24:</label>
+            <select id="selectICAO24">
+            </select>
+            <label for="cars">Choose a Callsign:</label>
+            <select id="selectCallsign">
+            </select>
+            <p>
+                Total distance traveled: <span id="totalDistance" style="font-weight: bold; color:blue"></span>
+            </p>
+        </div>
+        <div id="mapAircraft"></div>
+    </div>
 
     <div class="plots">
         <!-- The div where we will inject our map -->
-        <div id="map"></div>
+
         <hr>
         <div id="barChart"></div>
         <hr>
@@ -78,10 +96,15 @@
         <hr>
         <!-- <div id="airplaneMap"></div> -->
     </div>
+
+
+
     <!-- API key -->
     <script type="text/javascript" src="static/js/config.js"></script>
     <!-- JS -->
     <script type="text/javascript" src="/static/js/logic_Gabriel_v3.js"></script>
+
+    <script type="text/javascript" src="/static/js/icao24_new.js"></script>
 </body>
 
 </html>

@@ -44,23 +44,27 @@
 </head>
 
 <body>
-    <div style="margin-left: 2%; margin-top:1%">
-        <h1>Aircraft Analysis</h1>
-        <label for="cars">Choose a ICAO24:</label>
-        <select id="selectICAO24">
-        </select>
-        <label for="cars">Choose a Callsign:</label>
-        <select id="selectCallsign">
-        </select>
-        <p>
-            Total distance traveled: <span id="totalDistance" style="font-weight: bold; color:green"></span>
-        </p>
+    <div>
+        <div style="margin-left: 2%; margin-top:1%">
+            <h1>Aircraft Analysis</h1>
+            <label for="cars">Choose a ICAO24:</label>
+            <select id="selectICAO24">
+            </select>
+            <label for="cars">Choose a Callsign:</label>
+            <select id="selectCallsign">
+            </select>
+            <p>
+                Total distance traveled: <span id="totalDistance" style="font-weight: bold; color:blue"></span>
+            </p>
+        </div>
+        <div id="mapAircraft"></div>
     </div>
-    <div id="mapAircraft"></div>
+
     <!-- API key -->
     <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
     <!-- JS -->
     <script type="text/javascript" src="/static/js/icao24_new.js"></script>
+
 </body>
 
 </html>
