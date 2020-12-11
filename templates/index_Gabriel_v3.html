@@ -64,14 +64,20 @@
     <div>
         <div style="margin-left: 2%; margin-top:1%">
             <h1>Aircraft Analysis</h1>
-            <label for="cars">Choose a ICAO24:</label>
+            <label for="cars">Choose an aircraft:</label>
             <select id="selectICAO24">
             </select>
-            <label for="cars">Choose a Callsign:</label>
+            <label for="cars">Choose a flight:</label>
             <select id="selectCallsign">
             </select>
             <p>
+                Current Aircraft: <span id="aircraftICAO" style="font-weight: bold;"></span>
+                Current Flight: <span id="aircraftCallsign" style="font-weight: bold;"></span>
                 Total distance traveled: <span id="totalDistance" style="font-weight: bold; color:blue"></span>
+            </p>
+            <p>
+                Total aircrafts on this route: <span id="aircraftICAOFlight" style="font-weight: bold;"></span>
+                Total flights for this aircraft: <span id="aircraftCallsignICAO" style="font-weight: bold;"></span>
             </p>
         </div>
         <div id="mapAircraft"></div>
