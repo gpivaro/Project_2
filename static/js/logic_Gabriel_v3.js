@@ -4,6 +4,17 @@ var config = {
     displayModeBar: false
 };
 
+// Return date formated to local string
+function formatDate(myDate) {
+    /* Date.prototype.toLocaleDateString()
+     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
+    var timeOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    // timeOptions.timeZone = 'UTC';
+    // Retrieve the newest meas time and convert the format
+    var newestData = new Date(myDate * 1000);
+    var newestDataTime = newestData.toLocaleTimeString("en-US", timeOptions);
+    return newestDataTime
+}
 
 // Define variables for our tile layers
 var attribution =
@@ -116,8 +127,8 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
                             ICAO address: ${element["icao24"]}<br/>
                             Callsign: <a href='https://flightaware.com/resources/registration/${element["callsign"]}' target="_blank">${element["callsign"]}</a><br/>
                             Origin country: ${element["origin_country"]}<br/>
-                            Time of position update: ${element["time_position"]} (UTC)<br/>
-                            Time of last update: ${element["last_contact"]} (UTC)<br/>
+                            Time of position update: ${formatDate(element["time_position"])}<br/>
+                            Time of last update: ${formatDate(element["last_contact"])}<br/>
                             Longitude: ${element["longitude"]}<br/>
                             Latitude: ${element["latitude"]}<br/>
                             Altitude ${element["baro_altitude"]} m | ${Math.round(element["baro_altitude"] * 3.28084)} ft<br/>
@@ -186,10 +197,10 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
 
             // Create our map, giving it the streetmap and earthquakes layers to display on load
             var myMap = L.map("map", {
-                // center: [39, -99],
+                center: [39, -99],
                 // zoom: 4,
-                center: [16, 0],
-                zoom: 2,
+                // center: [16, 0],
+                zoom: 4.5,
                 layers: [OpenStreetTiles, airportLayer, aircraftsLayer],
                 scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
             });

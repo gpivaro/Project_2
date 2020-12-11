@@ -54,3 +54,15 @@ SELECT
 FROM
     project_2.aircraft_data
 GROUP BY FROM_UNIXTIME(time, '%Y-%m-%d %H');
+
+
+
+SELECT DISTINCT
+    icao24,
+    AVG(velocity) AS averageVelocity,
+    COUNT(id) AS totalNum
+FROM
+    project_2.aircraft_data
+GROUP BY icao24
+ORDER BY averageVelocity DESC
+LIMIT 10;
