@@ -54,6 +54,10 @@ app = Flask(__name__)
 def welcome():
     return render_template("index_Gabriel.html")
 
+# Home page.
+@app.route("/sarah")
+def home():
+    return render_template("index_sarah.html")
 
 # Return the APIs route available
 @app.route("/api/v1.0/")
