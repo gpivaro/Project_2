@@ -208,9 +208,9 @@ var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 //     attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 // });
 
-icao24 = '42499a'
-getDataICAO(icao24);
 
+// getDataICAO('42499a');
+getDataCallsign('DAL952')
 
 
 function airportsData() {
