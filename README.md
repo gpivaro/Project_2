@@ -30,6 +30,16 @@
 
 * https://www.airport-data.com/aircraft/N139CH.html
 
+
+Convert icao24 to registration number:
+http://www.avionictools.com/icao.php
+Ex: icao24 -> a8102a  ---->  N61898
+Use the registration number (N...) to search for aircraft
+https://flightaware.com/resources/registration/N61898
+
+
+
+
 #### Weather API:
 
 
