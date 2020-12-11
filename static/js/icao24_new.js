@@ -209,8 +209,7 @@ var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 // });
 
 
-// getDataICAO('42499a');
-getDataCallsign('DAL952')
+
 
 
 function airportsData() {
@@ -270,3 +269,6 @@ function formatDate(myDate) {
     var newestDataTime = newestData.toLocaleTimeString("en-US", timeOptions);
     return newestDataTime
 }
+
+getDataICAO('42499a');
+// getDataCallsign('DAL952')
