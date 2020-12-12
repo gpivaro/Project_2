@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 
-    <!-- plotly -->
+    <!-- Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <!-- Our CSS -->
@@ -37,6 +37,7 @@
     <script src="https://unpkg.com/leaflet"></script>
     <script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
 
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
     <!-- Turf.js -->
@@ -44,67 +45,108 @@
 </head>
 
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-7">
+                <div>
+                    <!-- <div style="margin-left: 2%; margin-top:1%; margin-right: 2%;"> -->
+                    <h1>Real-Time Air Traffic Map</h1>
+                    <!-- <p style="margin-bottom: 5%;"> -->
 
-    <div style="margin-left: 2%; margin-top:1%">
-        <h1>Real-Time Air Traffic Map</h1>
-        <p>
-            Number of aircrafts on the map: <span id="numAircrafts" style="color: red; font-weight: bold;"></span>
-        </p>
-        <p>
-            Number aircraft records on the database: <span id="totalAircraftDatabase" style="font-weight: bold;"></span>
-        </p>
-        <p>
-            Number of airports on the database: <span id="totalNumAirports"
-                style="font-weight: bold; color:green"></span>
-        </p>
+                    Aircrafts on the map (global): <span id="numAircrafts"
+                        style="color: red; font-weight: bold;"></span><br />
+                    Aircraft position records on the database: <span id="totalAircraftDatabase"
+                        style="font-weight: bold;"></span><br />
+                    Total airports for: <span id="totalNumAirports" style="font-weight: bold; color:green"></span><br />
 
-        <div id="map"></div>
-    </div>
-
-    <div>
-        <div style="margin-left: 2%; margin-top:1%">
-            <h1>Aircraft Analysis</h1>
-            <label for="cars">Choose a ICAO24:</label>
-            <select id="selectICAO24">
-            </select>
-            <label for="cars">Choose a Callsign:</label>
-            <select id="selectCallsign">
-            </select>
-            <p>
-                Total distance traveled: <span id="totalDistance" style="font-weight: bold; color:blue"></span>
-            </p>
+                    <label for="cars">Airports:</label>
+                    <select id="selectAirportCountry">
+                        <option value="" disabled selected hidden>Choose a country</option>
+                    </select>
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div class="col-5">
+                <div>
+                    <!-- <div style="margin-left: 2%; margin-top:1%; margin-right: 2%;"> -->
+                    <h1>Aircraft Analysis</h1>
+                    Aircraft: <span id="aircraftICAO"
+                        style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Flight: <span id="aircraftCallsign" style="font-weight: bold;"></span><br />
+                    Distance traveled: <span id="totalDistance" style="font-weight: bold; color:blue"></span><br />
+                    Different flights: <span id="aircraftCallsignICAO"
+                        style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Different aircrafts on this flight: <span id="aircraftICAOFlight"
+                        style="font-weight: bold;"></span><br />
+                    <label for="cars">Aircraft:</label>
+                    <select id="selectICAO24">
+                        <option value="" disabled selected hidden>Choose an aircraft</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label for="cars">Flight:</label>
+                    <select id="selectCallsign">
+                        <option value="" disabled selected hidden>Choose a flight</option>
+                    </select>
+                    <div id="mapAircraft"></div>
+                </div>
+            </div>
         </div>
-        <div id="mapAircraft"></div>
+        <hr>
     </div>
+
+
 
     <div class="plots">
         <!-- The div where we will inject our map -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div id="scatterVelAltitude"></div>
+                </div>
+                <div class="col-sm">
+                    <div id="baroAltitudeHist"></div>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div id="barChart"></div>
+                </div>
+                <div class="col-sm">
+                    <div id="barChartAirports"></div>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-3" style="padding-right: 25%;">
+                    <div id="positionSourcePlot"></div>
+                </div>
+                <div class="col-7">
+                    <!-- Canvas for ChartsJS plot -->
+                    <canvas id="myChart" width="80%" height="50%"></canvas>
+                </div>
+            </div>
+        </div>
 
-        <hr>
-        <div id="barChart"></div>
-        <hr>
-        <div id="scatterVelAltitude"></div>
-        <hr>
-        <div id="baroAltitudeHist"></div>
-        <hr>
-        <div id="positionSourcePlot"></div>
-        <hr>
-        <div id="barChartAirports"></div>
-        <hr>
-        <!-- Canvas for ChartsJS plot -->
-        <canvas id="myChart" width="300" height="100"></canvas>
-        <hr>
         <!-- <div id="airplaneMap"></div> -->
     </div>
 
 
 
     <!-- API key -->
-    <script type="text/javascript" src="static/js/config.js"></script>
+    <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
     <!-- JS -->
-    <script type="text/javascript" src="/static/js/logic_Gabriel_v3.js"></script>
 
     <script type="text/javascript" src="/static/js/icao24_new.js"></script>
+    <script type="text/javascript" src="/static/js/logic_Gabriel_v3.js"></script>
+
+
+
+
+
 </body>
 
 </html>

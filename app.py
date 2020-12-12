@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, url_for
 from sqlalchemy import create_engine
+# from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
 import json
@@ -15,13 +16,6 @@ try:
 except:
     pass
 
-# mysql_hostname = os.environ['MYSQL_HOSTNAME']
-# print(mysql_hostname)
-# mysql_port = os.environ['MYSQL_PORT']
-# print(mysql_port)
-# mysql_user_project2 = os.environ['MYSQL_USERNAME']
-# mysql_pass_project2 = os.environ['MYSQL_PASSWORD']
-
 
 
 # Database name and database tables
@@ -35,7 +29,6 @@ try:
 except KeyError:
     database_uri = f"mysql+mysqlconnector://{mysql_user_project2}:{mysql_pass_project2}@{mysql_hostname}:{mysql_port}/{database_name}"
 
-print(database_uri)
 
 # Create the engine to connect to the database
 engine = create_engine(database_uri)
@@ -46,13 +39,18 @@ engine = create_engine(database_uri)
 #################################################
 app = Flask(__name__)
 
+
+# # SQLite for performance reason
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+# db = SQLAlchemy(app)
+
+
 #################################################
 # Flask Routes
 #################################################
 # Use Flask to create your routes.
 
 # Route
-
 
 # Home page.
 @app.route("/")
@@ -72,7 +70,6 @@ def home():
 # Return the APIs route available
 @app.route("/api/v1.0/")
 def api_routes():
-
     return (
         f"<h3>API routes available:</h3>"
         f"/aircrafts-data<br/>"
@@ -85,8 +82,8 @@ def api_routes():
 # Return a json with the query results for the aircrafts table
 @app.route("/api/v1.0/aircrafts-data")
 def api_aircrafts():
-
-    # MySQL query to return all table elements that have not null latitute and have the newest time stamp
+    # MySQL query to return all table elements that have not 
+    # null latitute and have the newest time stamp
     aircraft_df = pd.read_sql(
         f"""
         SELECT
@@ -111,19 +108,31 @@ def api_aircrafts():
     return jsonify(parsed)
 
 # Return a json with the query results for the airports table
-@app.route("/api/v1.0/airports-data")
-def api_airports():
+@app.route("/api/v1.0/airports-data/<country>")
+def api_airports(country):
 
-    airports_df = pd.read_sql(
-        f"""
-        SELECT 
-            * 
-        FROM 
-            {table_airports} 
-        ORDER BY 
-            AirportID;
-        """,
-         engine)
+    if f"{country}" == 'ALL':
+        airports_df = pd.read_sql(
+            f"""
+            SELECT 
+                * 
+            FROM 
+                {table_airports};
+            """,
+            engine)
+    else:
+        airports_df = pd.read_sql(
+            f"""
+            SELECT 
+                * 
+            FROM 
+                {table_airports}
+            WHERE
+                Country = '{country}' 
+            ORDER BY 
+                AirportID;
+            """,
+            engine)
 
     result = airports_df.to_json(orient="records")
     parsed = json.loads(result)
@@ -197,41 +206,37 @@ def api_aircrafts_byhour():
 
 
 
-# Return a json with the query results for the aircraft table
-@app.route("/api/v1.0/aircraft-icao24/<icao24>")
-def api_aircraft_data(icao24):
+# # Return a json with the query results for the aircraft table
+# @app.route("/api/v1.0/aircraft-icao24/<icao24>")
+# def api_aircraft_data(icao24):
 
-    df = pd.read_sql(f"""
-                    SELECT 
-                        *
-                    FROM
-                        {table_airplanes}
-                    WHERE
-                        longitude IS NOT NULL
-                    AND
-                        icao24 = '{icao24}';
-                    """,
-            engine)
+#     df = pd.read_sql(f"""
+#                     SELECT 
+#                         *
+#                     FROM
+#                         {table_airplanes}
+#                     WHERE
+#                         longitude IS NOT NULL
+#                     AND
+#                         icao24 = '{icao24}';
+#                     """,
+#             engine)
 
-    # Calculate the distance between two coordinates
-    df['distance_traveled'] = ''
-    for index,row in df.iterrows():
-    #     print((row['latitude'],row['longitude']))
-        try:
-            coords_1 = (df['latitude'].iloc[index],df['longitude'].iloc[index])
-            coords_2 = ((df['latitude'].iloc[index+1],df['longitude'].iloc[index+1]))
-            distance_mi = round(geopy.distance.geodesic(coords_1, coords_2).mi*10)/10
-            df['distance_traveled'].iloc[index] = distance_mi
-        except:
-            pass
+#     # Calculate the distance between two coordinates
+#     df['distance_traveled'] = ''
+#     for index,row in df.iterrows():
+#     #     print((row['latitude'],row['longitude']))
+#         try:
+#             coords_1 = (df['latitude'].iloc[index],df['longitude'].iloc[index])
+#             coords_2 = ((df['latitude'].iloc[index+1],df['longitude'].iloc[index+1]))
+#             distance_mi = round(geopy.distance.geodesic(coords_1, coords_2).mi*10)/10
+#             df['distance_traveled'].iloc[index] = distance_mi
+#         except:
+#             pass
 
-    result = df.to_json(orient="records")
-    parsed = json.loads(result)
-    return jsonify(parsed)
-
-    
-
-
+#     result = df.to_json(orient="records")
+#     parsed = json.loads(result)
+#     return jsonify(parsed)
 
 
 # The server is set to run on the computer IP address on the port 5100
