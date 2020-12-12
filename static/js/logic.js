@@ -396,7 +396,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   };
 
   function filterCountry(d) {
-    return d.country === 'Brazil';
+    return d.country === 'United States';
   };
 
   var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
