@@ -120,7 +120,7 @@ def api_airports(country):
                 {table_airports}
             ORDER BY 
                 AirportID
-            LIMIT = 3000;
+            LIMIT = 1000;
             """,
             engine)
     else:
