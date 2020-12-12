@@ -1,7 +1,7 @@
 // Responsive chart and hide control buttons on Plotly charts
 var config = {
   responsive: true,
-  displayModeBar: false
+  displayModeBar: true
 };
 
 // Creating our initial map object
