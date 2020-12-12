@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template, url_for
 from sqlalchemy import create_engine
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
 import json
