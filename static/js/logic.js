@@ -342,7 +342,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   // console.log(airportData);
 
   airportData.forEach(function (element) {
-    if (element.Country === "Brazil") {
+    if (element.Country === "United States") {
       L.circle([element.Latitude, element.Longitude], {
         fillOpacity: 0.75,
         color: "green",
