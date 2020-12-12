@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 
-    <!-- plotly -->
+    <!-- Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <!-- Our CSS -->
@@ -37,6 +37,7 @@
     <script src="https://unpkg.com/leaflet"></script>
     <script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
 
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
     <!-- Turf.js -->
@@ -65,20 +66,23 @@
                 <div>
                     <!-- <div style="margin-left: 2%; margin-top:1%; margin-right: 2%;"> -->
                     <h1>Aircraft Analysis</h1>
-                    Aircraft: <span id="aircraftICAO" style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    Aircraft: <span id="aircraftICAO"
+                        style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Flight: <span id="aircraftCallsign" style="font-weight: bold;"></span><br />
                     Distance traveled: <span id="totalDistance" style="font-weight: bold; color:blue"></span><br />
-                    Different Flights: <span id="aircraftCallsignICAO" style="font-weight: bold;"></span>&nbsp;&nbsp;
-                    Different Aircrafts on this route: <span id="aircraftICAOFlight"
+                    Different flights: <span id="aircraftCallsignICAO"
+                        style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Different aircrafts on this flight: <span id="aircraftICAOFlight"
                         style="font-weight: bold;"></span><br />
-                    <label for="cars">Choose aircraft:</label>
+                    <label for="cars">Aircraft:</label>
                     <select id="selectICAO24">
-                    </select>&nbsp;&nbsp;&nbsp;
-                    <label for="cars">Choose flight:</label>
+                        <option value="" disabled selected hidden>Choose an aircraft</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label for="cars">Flight:</label>
                     <select id="selectCallsign">
+                        <option value="" disabled selected hidden>Choose a flight</option>
                     </select>
                     <div id="mapAircraft"></div>
-
                 </div>
             </div>
         </div>
@@ -132,9 +136,10 @@
     <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
     <!-- JS -->
 
+    <script type="text/javascript" src="/static/js/logic_Gabriel_v3.js"></script>
     <script type="text/javascript" src="/static/js/icao24_new.js"></script>
 
-    <script type="text/javascript" src="/static/js/logic_Gabriel_v3.js"></script>
+
 
 
 </body>

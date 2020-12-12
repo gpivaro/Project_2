@@ -5,49 +5,7 @@ var config = {
 };
 
 
-// Add ChartJS to handle the query data
-url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
-d3.json(url_aircrafts_hour).then((queryData) => {
-    // console.log(queryData);
 
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: queryData.map(element => element.timeData),
-            datasets: [{
-                label: '# of aircrafts position info',
-                data: queryData.map(element => element.totalDataPoints),
-                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-                borderColor: ['rgba(255, 99, 132, 1)'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: 'Total Aircrafts Position Recorded By Hour',
-                fontSize: 20,
-            },
-            scales: {
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Position Information',
-                        fontSize: 16,
-                    },
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-
-        }
-    });
-})
 
 
 // Return date formated to local string
@@ -510,7 +468,49 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
     }
 );
 
+// Add ChartJS to handle the query data
+url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
+d3.json(url_aircrafts_hour).then((queryData) => {
+    // console.log(queryData);
 
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: queryData.map(element => element.timeData),
+            datasets: [{
+                label: '# of aircrafts position info',
+                data: queryData.map(element => element.totalDataPoints),
+                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Total Aircrafts Position Recorded By Hour',
+                fontSize: 20,
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Position Information',
+                        fontSize: 16,
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+
+        }
+    });
+})
 
 
 // d3.json('http://127.0.0.1:5000/api/v1.0/aircrafts-data/icao24/34724e').then((queryData) => {
