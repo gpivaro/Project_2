@@ -117,8 +117,7 @@ def api_airports(country):
             SELECT 
                 * 
             FROM 
-                {table_airports}
-            LIMIT 3000;
+                {table_airports};
             """,
             engine)
     else:
