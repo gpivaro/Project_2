@@ -111,6 +111,8 @@ function createMarker(data) {
     // create array of markers
     var markersArray = [];
     var latlngsPolyline = [];
+    var allAircrafts = [];
+    var allFligths = [];
     data.forEach(element => {
         // console.log([element.latitude, element.longitude]);
         var marker = L.circle([element.latitude, element.longitude], {
@@ -140,7 +142,28 @@ function createMarker(data) {
 
         markersArray.push(marker);
         latlngsPolyline.push([element.latitude, element.longitude]);
-    })
+        if (allAircrafts.includes(element["icao24"])) {
+            5
+        } else {
+            allAircrafts.push(element["icao24"])
+        }
+        if (allFligths.includes(element["callsign"])) {
+            5
+        } else {
+            allFligths.push(element["callsign"])
+        }
+
+
+    });
+
+    // Verify how many differents flight for the same aircraft
+    // or how many different aircrafts for the same flight
+    console.log(allAircrafts);
+    console.log(allAircrafts.length);
+    console.log(allFligths);
+    console.log(allFligths.length);
+    document.getElementById('aircraftICAOFlight').textContent = `${allAircrafts.length} `;
+    document.getElementById('aircraftCallsignICAO').textContent = `${allFligths.length} `;
 
     // create a layer group with the array of markers
     markersLayer = L.featureGroup(markersArray);
@@ -165,6 +188,11 @@ function createMarker(data) {
     }
     totalDist = Math.round(totalDist);
     document.getElementById('totalDistance').textContent = `${totalDist.toLocaleString()} (mi).`;
+
+    // Aircraft name or flight name
+    document.getElementById('aircraftICAO').textContent = `${data[1].icao24} `;
+    document.getElementById('aircraftCallsign').textContent = `${data[1].callsign} `;
+
 
 };
 
@@ -270,5 +298,5 @@ function formatDate(myDate) {
     return newestDataTime
 }
 
-getDataICAO('42499a');
+getDataICAO('ace6e2');
 // getDataCallsign('DAL952')
