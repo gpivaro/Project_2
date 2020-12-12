@@ -298,5 +298,5 @@ function formatDate(myDate) {
     return newestDataTime
 }
 
-getDataICAO('42499a');
+getDataICAO('ace6e2');
 // getDataCallsign('DAL952')

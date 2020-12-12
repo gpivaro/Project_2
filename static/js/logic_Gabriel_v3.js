@@ -4,6 +4,52 @@ var config = {
     displayModeBar: false
 };
 
+
+// Add ChartJS to handle the query data
+url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
+d3.json(url_aircrafts_hour).then((queryData) => {
+    // console.log(queryData);
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: queryData.map(element => element.timeData),
+            datasets: [{
+                label: '# of aircrafts position info',
+                data: queryData.map(element => element.totalDataPoints),
+                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Total Aircrafts Position Recorded By Hour',
+                fontSize: 20,
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Position Information',
+                        fontSize: 16,
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+
+        }
+    });
+})
+
+
 // Return date formated to local string
 function formatDate(myDate) {
     /* Date.prototype.toLocaleDateString()
@@ -183,7 +229,15 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
             // Now we can handle them as one group instead of referencing each individually.
             var airportLayer = L.layerGroup(airportArray);
             // create a layerGroup for each airport markers.
-            var aircraftsLayer = L.layerGroup(aircrafts);
+            var aircraftsLayer = L.featureGroup(aircrafts)
+                .on('dblclick', function (e) {
+
+                    var popup = e.layer.getPopup();
+                    console.log(popup);
+                    var content = popup.getContent();
+                    console.log(content);
+                    var htmlDoc = parser.parseFromString(txt, 'text/html');
+                });
 
             // Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
             var dayNigthRegions = L.terminator();
@@ -201,7 +255,7 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
                 // zoom: 4,
                 // center: [16, 0],
                 zoom: 4.5,
-                layers: [OpenStreetTiles, airportLayer, aircraftsLayer],
+                layers: [OpenStreetTiles, aircraftsLayer],
                 scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
             });
 
@@ -211,6 +265,10 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
             L.control.layers(baseMaps, overlayMaps, {
                 collapsed: false
             }).addTo(myMap);
+
+            myMap.on('click', function (e) {
+                alert(e.latlng);
+            });
 
 
             // ******************************************************************
@@ -448,51 +506,6 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
         });
     }
 );
-
-
-// Add ChartJS to handle the query data
-url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
-d3.json(url_aircrafts_hour).then((queryData) => {
-    // console.log(queryData);
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: queryData.map(element => element.timeData),
-            datasets: [{
-                label: '# of aircrafts position info',
-                data: queryData.map(element => element.totalDataPoints),
-                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-                borderColor: ['rgba(255, 99, 132, 1)'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: 'Total Aircrafts Position Recorded By Hour',
-                fontSize: 20,
-            },
-            scales: {
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Position Information',
-                        fontSize: 16,
-                    },
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-
-        }
-    });
-})
 
 
 
