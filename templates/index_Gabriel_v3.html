@@ -51,14 +51,18 @@
                 <div>
                     <!-- <div style="margin-left: 2%; margin-top:1%; margin-right: 2%;"> -->
                     <h1>Real-Time Air Traffic Map</h1>
-                    <p style="margin-bottom: 5%;">
-                        Number of aircrafts on the map (global): <span id="numAircrafts"
-                            style="color: red; font-weight: bold;"></span><br />
-                        Number aircraft records on the database: <span id="totalAircraftDatabase"
-                            style="font-weight: bold;"></span><br />
-                        Number of airports on the database: <span id="totalNumAirports"
-                            style="font-weight: bold; color:green"></span><br />
-                    </p>
+                    <!-- <p style="margin-bottom: 5%;"> -->
+
+                    Aircrafts on the map (global): <span id="numAircrafts"
+                        style="color: red; font-weight: bold;"></span><br />
+                    Aircraft position records on the database: <span id="totalAircraftDatabase"
+                        style="font-weight: bold;"></span><br />
+                    Total airports for: <span id="totalNumAirports" style="font-weight: bold; color:green"></span><br />
+
+                    <label for="cars">Airports:</label>
+                    <select id="selectAirportCountry">
+                        <option value="" disabled selected hidden>Choose a country</option>
+                    </select>
                     <div id="map"></div>
                 </div>
             </div>
@@ -136,8 +140,9 @@
     <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
     <!-- JS -->
 
-    <script type="text/javascript" src="/static/js/logic_Gabriel_v3.js"></script>
     <script type="text/javascript" src="/static/js/icao24_new.js"></script>
+    <script type="text/javascript" src="/static/js/logic_Gabriel_v3.js"></script>
+
 
 
 

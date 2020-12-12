@@ -108,19 +108,33 @@ def api_aircrafts():
     return jsonify(parsed)
 
 # Return a json with the query results for the airports table
-@app.route("/api/v1.0/airports-data")
-def api_airports():
+@app.route("/api/v1.0/airports-data/<country>")
+def api_airports(country):
 
-    airports_df = pd.read_sql(
-        f"""
-        SELECT 
-            * 
-        FROM 
-            {table_airports} 
-        ORDER BY 
-            AirportID;
-        """,
-         engine)
+    if f"{country}" == 'ALL':
+        airports_df = pd.read_sql(
+            f"""
+            SELECT 
+                * 
+            FROM 
+                {table_airports}
+            ORDER BY 
+                AirportID;
+            """,
+            engine)
+    else:
+        airports_df = pd.read_sql(
+            f"""
+            SELECT 
+                * 
+            FROM 
+                {table_airports}
+            WHERE
+                Country = '{country}' 
+            ORDER BY 
+                AirportID;
+            """,
+            engine)
 
     result = airports_df.to_json(orient="records")
     parsed = json.loads(result)

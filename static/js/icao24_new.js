@@ -1,6 +1,6 @@
 var mapAirplanes = L.map('mapAircraft', {
     scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
-}).setView([1, -0.09], 2);
+}).setView([0, 0], 2);
 
 var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -83,32 +83,37 @@ data to populate the dropdown menus */
 function loadDropdown() {
     url_icao24 = `/api/v1.0/aircrafts-data`
     d3.json(url_icao24).then((importData) => {
-        var icao24Array = []
-        var callsignArray = []
-        importData.forEach(element => {
-            if (element.icao24 != '') {
-                icao24Array.push(element.icao24)
-            };
-            if (element.callsignArray != '') {
-                callsignArray.push(element.callsign)
-            };
-        })
-
-        // Sort arrays
-        icao24Array.sort();
-        callsignArray.sort();
-        // Remove empty strings on the array
-        var newIcao24Array = icao24Array.filter(function (e) {
-            return e === 0 ? '0' : e
-        })
-        var newcallsignArray = callsignArray.filter(function (e) {
-            return e === 0 ? '0' : e
-        })
-        // Add the options for the dropdown menu
-        selectOptionAddText('#selectICAO24', newIcao24Array)
-        selectOptionAddText('#selectCallsign', newcallsignArray)
+        createDropdownMenu(importData)
     });
 };
+
+// Create dropdown menu
+function createDropdownMenu(importData) {
+    var icao24Array = []
+    var callsignArray = []
+    importData.forEach(element => {
+        if (element.icao24 != '') {
+            icao24Array.push(element.icao24)
+        };
+        if (element.callsignArray != '') {
+            callsignArray.push(element.callsign)
+        };
+    })
+
+    // Sort arrays
+    icao24Array.sort();
+    callsignArray.sort();
+    // Remove empty strings on the array
+    var newIcao24Array = icao24Array.filter(function (e) {
+        return e === 0 ? '0' : e
+    })
+    var newcallsignArray = callsignArray.filter(function (e) {
+        return e === 0 ? '0' : e
+    })
+    // Add the options for the dropdown menu
+    selectOptionAddText('#selectICAO24', newIcao24Array)
+    selectOptionAddText('#selectCallsign', newcallsignArray)
+}
 
 // Event listener to update page based on the dropdown selection
 function updatePageICAO() {
@@ -240,7 +245,7 @@ function createMarker(data) {
 getDataICAO('ace6e2');
 // getDataCallsign('DAL952')
 
-loadDropdown();
+// loadDropdown();
 
 // Handler for the dropdown change for ICAO24
 d3.select('#selectICAO24').on('change', updatePageICAO);
