@@ -254,7 +254,7 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
                 center: [39, -99],
                 // zoom: 4,
                 // center: [16, 0],
-                zoom: 4.5,
+                zoom: 3.5,
                 layers: [OpenStreetTiles, aircraftsLayer],
                 scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
             });
@@ -390,9 +390,12 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
 
             var layout = {
                 title: 'Aircraft Position Source',
-                height: 400,
-                width: 600,
+                height: 300,
+                width: 500,
+                margin: { "t": 35, "b": 0, "l": 0, "r": 10 },
                 showlegend: true,
+                legend: { "orientation": "h" }
+
                 // grid: { rows: 1, columns: 1 }
             };
 
@@ -401,8 +404,8 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
 
             // Aircraft Speed vs. Altitude Chart
             var trace3 = {
-                x: flightData.map(element => element.baro_altitude * 3.28084),
-                y: flightData.map(element => element.velocity * 2.23694),
+                y: flightData.map(element => element.baro_altitude * 3.28084),
+                x: flightData.map(element => element.velocity * 2.23694),
                 // text: flightData.map(element => element.callsign),
                 text: flightData,
                 hovertemplate: 'Callsign: %{text.callsign}<extra></extra>' +
@@ -416,10 +419,10 @@ d3.json(aircrafts_api_url).then((aircraftsData) => {
             var layout = {
                 title: "Aircraft Speed vs. Altitude",
                 xaxis: {
-                    title: "Altitude (ft) "
+                    title: "Speed (mph) "
                 },
                 yaxis: {
-                    title: "Speed (mph) ",
+                    title: "Altitude (ft) ",
                     automargin: true,
                 }
             }
