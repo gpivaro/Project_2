@@ -237,7 +237,7 @@ d3.json(url).then(function (data) {
   ///////////////////////////////////////////////////////////////////////////////////
   // Begin of the first d3.json
   // Store the imported data to a variable
-  console.log(data);
+  // console.log(data);
 
   // Create and object with the data organized by key value pair
   var flightData = [];
@@ -418,7 +418,10 @@ d3.json(url).then(function (data) {
       MLAT += 1;
     }
   };
-  posSource.push({ "Type": "ADS-B", "Qtd": ADSB }, { "Type": "ASTERIX", "Qtd": ASTERIX }, { "Type": "MLAT", "Qtd": MLAT });
+  posSource.push(
+    { "Type": "ADS-B", "Qtd": ADSB },
+    { "Type": "ASTERIX", "Qtd": ASTERIX },
+    { "Type": "MLAT", "Qtd": MLAT });
   // console.log(posSource);
 
 
@@ -478,27 +481,3 @@ d3.json(url).then(function (data) {
 
 
 });
-
-
-
-
-
-
-
-
-// Handler for the dropdown change
-d3.select('#selDataset').on('change', console.log('Selected'));
-
-// // Event listen to update page based on the dropdown selection
-// function updatePage() {
-
-//     var dropdown = d3.select('#selDataset');
-//     var dropdownValue = dropdown.property('value');
-//     // console.log(dropdownValue);
-
-//     // Parse the dropdown values as integer
-//     var SubjectID = parseInt(dropdownValue);
-
-//     // Build the plot with the new stock
-//     buildPlot(SubjectID);
-// };
