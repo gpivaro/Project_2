@@ -16,7 +16,7 @@ var tiles = L.tileLayer(titleUrl, { attribution });
 // tiles.addTo(myMap);
 
 // Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
-// L.terminator().addTo(myMap);
+
 
 /* Date.prototype.toLocaleDateString()
      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
@@ -32,7 +32,8 @@ var config = {
 // Initialize all of the LayerGroups we'll be using
 var layers = {
   Aircrafts: new L.LayerGroup(),
-  Airports: new L.LayerGroup()
+  Airports: new L.LayerGroup(),
+  DayNight: new L.LayerGroup()
 };
 
 
@@ -46,7 +47,8 @@ var myMap = L.map("map", {
   scrollWheelZoom: false, //Disable scroll wheel zoom on Leaflet
   layers: [
     layers.Aircrafts,
-    layers.Airports
+    layers.Airports,
+    layers.DayNight
   ]
 });
 
@@ -253,13 +255,13 @@ d3.json(url).then(function (data) {
     Time of last update: ${element["last_contact"]} (UTC)<br/>
     Longitude: ${element["longitude"]}<br/>
     Latitude: ${element["latitude"]}<br/>
-    Altitude ${(element["baro_altitude"]).toLocaleString()} m | ${(Math.round(element["baro_altitude"] * 3.28084)).toLocaleString()} ft<br/>
+    Altitude ${(element["baro_altitude"])} m | ${(Math.round(element["baro_altitude"] * 3.28084))} ft<br/>
     On ground: ${element["on_ground"]}<br/>
     Velocity: ${element["velocity"]} m/s | ${Math.round(element["velocity"] * 2.23694)} mph <br/>
     True track: ${element["true_track"]}° (north=0°)<br/>
     Vertical rate: ${element["vertical_rate"]} m/s<br/>
     Sensors ID: ${element["sensors"]}<br/>
-    Geometric altitude: ${(element["geo_altitude"]).toLocaleString()} m | ${(Math.round(element["geo_altitude"] * 3.28084)).toLocaleString()} ft<br/>
+    Geometric altitude: ${(element["geo_altitude"])} m | ${(Math.round(element["geo_altitude"] * 3.28084))} ft<br/>
     Transponder code: ${element["squawk"]}<br/>
     Special purpose indicator: ${element["spi"]}<br/>
     Position_source: ${element["position_source"]}<br/>
@@ -269,7 +271,7 @@ d3.json(url).then(function (data) {
   })
 
 
-
+  // L.terminator();
 
   // Create an array with the origin countries
   countrytData = [];
