@@ -287,7 +287,8 @@ d3.json(url).then(function (data) {
   // add marker to map for each flight
   flightData.forEach(function (element) {
     var marker = L.marker([element.latitude, element.longitude], {
-      icon: aircraftIcon,
+      icon: icons['Aircraft']
+      // icon: aircraftIcon,
       //       fillOpacity: 0.75,
       //       color: "red",
       //       fillColor: "blue",
