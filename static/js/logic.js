@@ -100,8 +100,8 @@ d3.json(url).then(function (data) {
                     Type: ${element["Type"]}<br/>
                     Tz database time zone: ${element["Tz database time zone"]}<br/>`
         );
+        circle.addTo(layers['Airports']);
       }
-      circle.addTo(layers['Airports']);
     });
 
 
@@ -239,7 +239,7 @@ d3.json(url).then(function (data) {
 
   // add marker to map for each flight
   flightData.forEach(function (element) {
-    marker = L.marker([element.latitude, element.longitude], {
+    var marker = L.marker([element.latitude, element.longitude], {
       icon: aircraftIcon,
       //       fillOpacity: 0.75,
       //       color: "red",
@@ -266,9 +266,11 @@ d3.json(url).then(function (data) {
     Special purpose indicator: ${element["spi"]}<br/>
     Position_source: ${element["position_source"]}<br/>
     For more details: <a href='https://flightaware.com/live/flight/${element["callsign"]}' target="_blank">link</a>
-  `, { "background": "#2c3e50" });
+  `, { "background": "#2c3e50" }
+    );
     marker.addTo(layers['Aircrafts']);
-  })
+  }
+  );
 
 
   // L.terminator();
