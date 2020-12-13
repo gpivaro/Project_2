@@ -66,7 +66,7 @@ var myMap = L.map("map", {
 });
 
 // Add our tile layer to the map
-tiles.addTo(myMap);
+Stadia_AlidadeSmoothDark.addTo(myMap);
 
 // Create an overlays object to add to the layer control
 var overlays = {
