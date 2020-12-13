@@ -19,6 +19,8 @@ var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/a
   attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
+
+
 //   Markers With Custom Icons
 var aircraftIcon = L.icon({
   iconUrl: 'static/images/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
