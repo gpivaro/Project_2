@@ -13,9 +13,17 @@ var attribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors';
 var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var tiles = L.tileLayer(titleUrl, { attribution });
-// tiles.addTo(myMap);
+tiles.addTo(myMap);
 
-// Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
+//   Markers With Custom Icons
+var aircraftIcon = L.icon({
+  iconUrl: 'static/images/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
+  iconSize: [38 / 4, 95 / 4], // size of the icon
+  // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+
+
 
 
 /* Date.prototype.toLocaleDateString()
@@ -52,12 +60,35 @@ var myMap = L.map("map", {
   ]
 });
 
-//   Markers With Custom Icons
-var aircraftIcon = L.icon({
-  iconUrl: 'static/images/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
-  iconSize: [38 / 4, 95 / 4], // size of the icon
-  // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+// Create an overlays object to add to the layer control
+var overlays = {
+  "Aircrafts": layers.Aircrafts,
+  "Airports": layers.Airports
+};
+
+
+// Create a control for our layers, add our overlay layers to it
+L.control.layers(null, overlays).addTo(myMap);
+
+// Create a legend to display information about our map
+var info = L.control({
+  position: "bottomright"
 });
+
+// When the layer control is added, insert a div with the class of "legend"
+info.onAdd = function () {
+  var div = L.DomUtil.create("div", "legend");
+  return div;
+};
+// Add the info legend to the map
+info.addTo(myMap);
+
+
+
+// Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
+// L.terminator();
+
+
 
 
 d3.json(url).then(function (data) {
@@ -272,8 +303,6 @@ d3.json(url).then(function (data) {
   }
   );
 
-
-  // L.terminator();
 
   // Create an array with the origin countries
   countrytData = [];
