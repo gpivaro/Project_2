@@ -1,8 +1,40 @@
+/* 
+This is the official documentation of the OpenSky Network’s live API. 
+The API lets you retrieve live airspace information for research and non-commerical purposes. 
+Documentation: https://opensky-network.org/apidoc/rest.html
+ */
+url = "https://opensky-network.org/api/states/all";
+
+// Data for the airport locations
+airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
+
+// To use OpenStreetMap instead of MapBox
+var attribution =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors';
+var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var tiles = L.tileLayer(titleUrl, { attribution });
+// tiles.addTo(myMap);
+
+// Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
+// L.terminator().addTo(myMap);
+
+/* Date.prototype.toLocaleDateString()
+     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
+var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+options.timeZone = 'UTC';
+
 // Responsive chart and hide control buttons on Plotly charts
 var config = {
   responsive: true,
   displayModeBar: true
 };
+
+// Initialize all of the LayerGroups we'll be using
+var layers = {
+  Aircrafts: new L.LayerGroup(),
+  Airports: new L.LayerGroup()
+};
+
 
 // Creating our initial map object
 // L.map accepts 2 arguments: id of the HTML element to insert the map, and an object containing the initial options for the new map
@@ -11,7 +43,11 @@ var myMap = L.map("map", {
   // center: [31.56, -96.47],
   center: [40.3, -99.14],
   zoom: 4,
-  scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
+  scrollWheelZoom: false, //Disable scroll wheel zoom on Leaflet
+  layers: [
+    layers.Aircrafts,
+    layers.Airports
+  ]
 });
 
 //   Markers With Custom Icons
@@ -21,30 +57,136 @@ var aircraftIcon = L.icon({
   // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
-// To use OpenStreetMap instead of MapBox
-var attribution =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors';
-var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-var tiles = L.tileLayer(titleUrl, { attribution });
-tiles.addTo(myMap);
 
-// Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
-L.terminator().addTo(myMap);
+d3.json(url).then(function (data) {
 
-/* Date.prototype.toLocaleDateString()
-     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
-var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-options.timeZone = 'UTC';
+  d3.csv("data/airports.csv").then(function (importedData) {
+    // console.log(importedData);
 
-/* 
-This is the official documentation of the OpenSky Network’s live API. 
-The API lets you retrieve live airspace information for research and non-commerical purposes. 
-Documentation: https://opensky-network.org/apidoc/rest.html
- */
-url = "https://opensky-network.org/api/states/all";
+    var airportData = importedData;
+    // Cast the data value to a number for each piece of data
+    airportData.forEach(function (d) {
+      d["Airport ID"] = +d["Airport ID"];
+      d["Altitude"] = +d["Altitude"];
+      d["Latitude"] = +d["Latitude"];
+      d["Longitude"] = +d["Longitude"];
+    });
+
+    // console.log(airportData);
+
+    airportData.forEach(function (element) {
+      if (element.Country === "United States") {
+        var circle = L.circle([element.Latitude, element.Longitude], {
+          fillOpacity: 0.75,
+          color: "green",
+          fillColor: "black",
+          // Adjust radius
+          radius: 2000
+        }).bindPopup(`<h3>Airport ID: ${element["Airport ID"]}</h3><hr>
+                    Airport ID: ${element["Airport ID"]}<br/>
+                    Name: ${element["Name"]}<br/>
+                    City: ${element["City"]}<br/>
+                    Country: ${element["Country"]}<br/>
+                    DST: ${element["DST"]}<br/>
+                    IATA: ${element["IATA"]}<br/>
+                    ICAO: ${element["ICAO"]}<br/>
+                    Altitude: ${element["Altitude"]}<br/>
+                    Latitude: ${element["Latitude"]}<br/>
+                    Longitude: ${element["Longitude"]}<br/>
+                    Source: ${element["Source"]}<br/>
+                    Timezone: ${element["Timezone"]}<br/>
+                    Type: ${element["Type"]}<br/>
+                    Tz database time zone: ${element["Tz database time zone"]}<br/>`
+        );
+      }
+      circle.addTo(layers['Airports']);
+    });
 
 
-d3.json(url).then((data) => {
+    // Create an array with the airports by countries
+    countryAirPorts = [];
+    for (var i = 0; i < airportData.length; i++) {
+      // conditional test to get only fligths with
+      if (countryAirPorts.includes(airportData[i].Country)) {
+        var n = 1;
+      } else {
+        countryAirPorts.push(airportData[i].Country)
+      }
+    };
+
+
+    // Create an object with the aircrafts by origin country
+    totalAirportsCountry = [];
+    for (var i = 0; i < countryAirPorts.length; i++) {
+      // conditional test to get only fligths with
+      n = 0;
+      for (var j = 0; j < airportData.length; j++) {
+        if (countryAirPorts[i] === airportData[j].Country) {
+          n += 1
+        }
+      }
+      totalAirportsCountry.push({ "country": countryAirPorts[i], "airports": n });
+    };
+
+    function filterCountry(d) {
+      return d.country === 'United States';
+    };
+
+    var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
+    console.log(currentCountryAirport[0].airports);
+    // Display on the screen the number of cleaned data points 
+    document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}${currentCountryAirport[0].airports.toLocaleString()}`;
+
+
+    // Sort the samples in descending order of sample values
+    totalAirportsCountry.sort((a, b) => b.airports - a.airports);
+
+    // Select the top origin country number of aircrafts
+    top10CountryAirports = totalAirportsCountry.slice(0, 10);
+
+
+    // Reverse the list due to the Plotly requeriments
+    top10CountryAirports.reverse()
+
+    // console.log(top10CountryAirports);
+
+    // Trace1 to display the data
+    var trace1 = {
+      x: top10CountryAirports.map(element => element.airports),
+      y: top10CountryAirports.map(element => element.country),
+      orientation: "h",
+      type: "bar",
+      marker: {
+        color: 'rgb(142,124,195)'
+      }
+    };
+
+    // create an array to be plotted
+    var chartData = [trace1];
+
+
+    // Responsive chart
+    var config = {
+      responsive: true,
+      displayModeBar: false
+    };
+
+    var layout = {
+      title: "Airports by Country",
+      xaxis: {
+        title: "Number of airports"
+      },
+      yaxis: {
+        automargin: true,
+      }
+    }
+
+    // Render the plot to the div tag id "plot"
+    Plotly.newPlot("barChartAirports", chartData, layout, config);
+  });
+  // End of the nested function
+  ///////////////////////////////////////////////////////////////////////////////////
+  // Begin of the first d3.json
   // Store the imported data to a variable
   console.log(data);
 
@@ -92,9 +234,10 @@ d3.json(url).then((data) => {
   // Display on the screen the number of cleaned data points 
   document.getElementById('numAircrafts').textContent = totalFlightMap.toLocaleString();
 
+
   // add marker to map for each flight
   flightData.forEach(function (element) {
-    L.marker([element.latitude, element.longitude], {
+    marker = L.marker([element.latitude, element.longitude], {
       icon: aircraftIcon,
       //       fillOpacity: 0.75,
       //       color: "red",
@@ -103,27 +246,30 @@ d3.json(url).then((data) => {
       //       radius: 20000
     }).bindPopup(`
     <h5>AirCraft Information</h5><hr>
-    ICAO24 <a href='https://opensky-network.org/aircraft-profile?icao24=${element["icao24"]}' target="_blank">${element["icao24"]}</a><br/>
+    ICAO24 / Mode S Code (hex): <a href='https://opensky-network.org/aircraft-profile?icao24=${element["icao24"]}' target="_blank">${element["icao24"]}</a><br/>
     Callsign: ${element["callsign"]} <br/>
     Country: ${element["origin_country"]}<br/>
     Time of position update: ${element["time_position"]} (UTC)<br/>
     Time of last update: ${element["last_contact"]} (UTC)<br/>
     Longitude: ${element["longitude"]}<br/>
     Latitude: ${element["latitude"]}<br/>
-    Altitude ${element["baro_altitude"].toLocaleString()} m | ${Math.round(element["baro_altitude"] * 3.28084).toLocaleString()} ft<br/>
+    Altitude ${(element["baro_altitude"]).toLocaleString()} m | ${(Math.round(element["baro_altitude"] * 3.28084)).toLocaleString()} ft<br/>
     On ground: ${element["on_ground"]}<br/>
     Velocity: ${element["velocity"]} m/s | ${Math.round(element["velocity"] * 2.23694)} mph <br/>
     True track: ${element["true_track"]}° (north=0°)<br/>
     Vertical rate: ${element["vertical_rate"]} m/s<br/>
     Sensors ID: ${element["sensors"]}<br/>
-    Geometric altitude: ${element["geo_altitude"].toLocaleString()} m | ${Math.round(element["geo_altitude"] * 3.28084).toLocaleString()} ft<br/>
+    Geometric altitude: ${(element["geo_altitude"]).toLocaleString()} m | ${(Math.round(element["geo_altitude"] * 3.28084)).toLocaleString()} ft<br/>
     Transponder code: ${element["squawk"]}<br/>
     Special purpose indicator: ${element["spi"]}<br/>
     Position_source: ${element["position_source"]}<br/>
     For more details: <a href='https://flightaware.com/live/flight/${element["callsign"]}' target="_blank">link</a>
-  `, { "background": "#2c3e50" }).addTo(myMap);
-
+  `, { "background": "#2c3e50" });
+    marker.addTo(layers['Aircrafts']);
   })
+
+
+
 
   // Create an array with the origin countries
   countrytData = [];
@@ -284,132 +430,9 @@ d3.json(url).then((data) => {
 });
 
 
-// Data for the airport locations
-airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
-
-d3.csv("data/airports.csv").then((importedData) => {
-  // console.log(importedData);
-
-  var airportData = importedData;
-  // Cast the data value to a number for each piece of data
-  airportData.forEach(function (d) {
-    d["Airport ID"] = +d["Airport ID"];
-    d["Altitude"] = +d["Altitude"];
-    d["Latitude"] = +d["Latitude"];
-    d["Longitude"] = +d["Longitude"];
-  });
-
-  // console.log(airportData);
-
-  airportData.forEach(function (element) {
-    if (element.Country === "United States") {
-      L.circle([element.Latitude, element.Longitude], {
-        fillOpacity: 0.75,
-        color: "green",
-        fillColor: "black",
-        // Adjust radius
-        radius: 2000
-      }).bindPopup(`<h3>Airport ID: ${element["Airport ID"]}</h3><hr>
-                  Airport ID: ${element["Airport ID"]}<br/>
-                  Name: ${element["Name"]}<br/>
-                  City: ${element["City"]}<br/>
-                  Country: ${element["Country"]}<br/>
-                  DST: ${element["DST"]}<br/>
-                  IATA: ${element["IATA"]}<br/>
-                  ICAO: ${element["ICAO"]}<br/>
-                  Altitude: ${element["Altitude"]}<br/>
-                  Latitude: ${element["Latitude"]}<br/>
-                  Longitude: ${element["Longitude"]}<br/>
-                  Source: ${element["Source"]}<br/>
-                  Timezone: ${element["Timezone"]}<br/>
-                  Type: ${element["Type"]}<br/>
-                  Tz database time zone: ${element["Tz database time zone"]}<br/>`
-      ).addTo(myMap);
-    }
-  });
 
 
-  // Create an array with the airports by countries
-  countryAirPorts = [];
-  for (var i = 0; i < airportData.length; i++) {
-    // conditional test to get only fligths with
-    if (countryAirPorts.includes(airportData[i].Country)) {
-      var n = 1;
-    } else {
-      countryAirPorts.push(airportData[i].Country)
-    }
-  };
 
-
-  // Create an object with the aircrafts by origin country
-  totalAirportsCountry = [];
-  for (var i = 0; i < countryAirPorts.length; i++) {
-    // conditional test to get only fligths with
-    n = 0;
-    for (var j = 0; j < airportData.length; j++) {
-      if (countryAirPorts[i] === airportData[j].Country) {
-        n += 1
-      }
-    }
-    totalAirportsCountry.push({ "country": countryAirPorts[i], "airports": n });
-  };
-
-  function filterCountry(d) {
-    return d.country === 'United States';
-  };
-
-  var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
-  console.log(currentCountryAirport[0].airports);
-  // Display on the screen the number of cleaned data points 
-  document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}${currentCountryAirport[0].airports.toLocaleString()}`;
-
-
-  // Sort the samples in descending order of sample values
-  totalAirportsCountry.sort((a, b) => b.airports - a.airports);
-
-  // Select the top origin country number of aircrafts
-  top10CountryAirports = totalAirportsCountry.slice(0, 10);
-
-
-  // Reverse the list due to the Plotly requeriments
-  top10CountryAirports.reverse()
-
-  // console.log(top10CountryAirports);
-
-  // Trace1 to display the data
-  var trace1 = {
-    x: top10CountryAirports.map(element => element.airports),
-    y: top10CountryAirports.map(element => element.country),
-    orientation: "h",
-    type: "bar",
-    marker: {
-      color: 'rgb(142,124,195)'
-    }
-  };
-
-  // create an array to be plotted
-  var chartData = [trace1];
-
-
-  // Responsive chart
-  var config = {
-    responsive: true,
-    displayModeBar: false
-  };
-
-  var layout = {
-    title: "Airports by Country",
-    xaxis: {
-      title: "Number of airports"
-    },
-    yaxis: {
-      automargin: true,
-    }
-  }
-
-  // Render the plot to the div tag id "plot"
-  Plotly.newPlot("barChartAirports", chartData, layout, config);
-});
 
 
 
