@@ -9,7 +9,7 @@ var config = {
 var myMap = L.map("map", {
   // For Houston uncomment:
   // center: [31.56, -96.47],
-  center: [40.3220860080861, -99.14975044508965],
+  center: [40.3, -99.14],
   zoom: 4,
   scrollWheelZoom: false //Disable scroll wheel zoom on Leaflet
 });
@@ -17,31 +17,9 @@ var myMap = L.map("map", {
 //   Markers With Custom Icons
 var aircraftIcon = L.icon({
   iconUrl: 'static/images/Airplane_wwwroot_uploads_svg_symbol_0qvhey5-airplane-vector.svg',
-
   iconSize: [38 / 4, 95 / 4], // size of the icon
-  //     shadowSize:   [50, 64], // size of the shadow
-  // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-  //     shadowAnchor: [4, 62],  // the same for the shadow
   // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
-
-//   Now putting a marker with this icon on a map
-//   L.marker([0, 0], {icon: aircraftIcon}).addTo(myMap);
-
-
-// Adding a tile layer (the background map image) to our map.
-// Leaflet doesn't have out-of-the-box tile layers, but it allows us to usetile layer APIs. Here, we're using mapbox.
-// We use the addTo method to add objects to our map
-// Documentation for tileLayer:https://leafletjs.com/reference-1.6.0.html#tilelayer
-// L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-//   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-//   maxZoom: 18,
-//   id: "dark-v10",
-//   // id: "streets-v11",
-//   accessToken: API_KEY
-// }).addTo(myMap);
-
-
 
 // To use OpenStreetMap instead of MapBox
 var attribution =
@@ -50,17 +28,13 @@ var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var tiles = L.tileLayer(titleUrl, { attribution });
 tiles.addTo(myMap);
 
-
-
 // Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
 L.terminator().addTo(myMap);
-
 
 /* Date.prototype.toLocaleDateString()
      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
 var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 options.timeZone = 'UTC';
-
 
 /* 
 This is the official documentation of the OpenSky Network’s live API. 
@@ -73,9 +47,6 @@ url = "https://opensky-network.org/api/states/all";
 d3.json(url).then((data) => {
   // Store the imported data to a variable
   console.log(data);
-
-  // document.getElementById('waitLoading').textContent = "Wait... the map is being loaded!";
-
 
   // Create and object with the data organized by key value pair
   var flightData = [];
@@ -116,9 +87,6 @@ d3.json(url).then((data) => {
     }
   };
 
-  // print the object data
-  // console.log(flightData.length);
-
   var totalFlightMap = flightData.length;
 
   // Display on the screen the number of cleaned data points 
@@ -133,7 +101,9 @@ d3.json(url).then((data) => {
       //       fillColor: "blue",
       // Adjust radius
       //       radius: 20000
-    }).bindPopup(`<h3>ICAO address: ${element["icao24"]}</h3><hr>
+    }).bindPopup(`
+    <h5>AirCraft Information</h5>
+    ICAO24 address: <a href='https://opensky-network.org/aircraft-profile?icao24=${element["icao24"]}' target="_blank">link</a><br/>
     Callsign: ${element["callsign"]} <br/>
     Origin country: ${element["origin_country"]}<br/>
     Time of position update: ${element["time_position"]} (UTC)<br/>
@@ -155,14 +125,6 @@ d3.json(url).then((data) => {
 
   })
 
-
-
-
-
-
-
-
-
   // Create an array with the origin countries
   countrytData = [];
   for (var i = 0; i < flightData.length; i++) {
@@ -173,7 +135,6 @@ d3.json(url).then((data) => {
       countrytData.push(flightData[i].origin_country)
     }
   };
-  // console.log(countrytData);
 
 
   // Create an object with the aircrafts by origin country
@@ -188,7 +149,6 @@ d3.json(url).then((data) => {
     }
     originCountryAircraft.push({ "country": countrytData[i], "aircrafts": n });
   };
-  // console.log(originCountryAircraft);
 
 
   // Sort the samples in descending order of sample values
@@ -380,7 +340,6 @@ d3.csv("data/airports.csv").then((importedData) => {
     }
   };
 
-  // console.log(countryAirPorts);
 
   // Create an object with the aircrafts by origin country
   totalAirportsCountry = [];
@@ -402,8 +361,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
   console.log(currentCountryAirport[0].airports);
   // Display on the screen the number of cleaned data points 
-  document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}
-                                                  ${currentCountryAirport[0].airports.toLocaleString()}`;
+  document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}${currentCountryAirport[0].airports.toLocaleString()}`;
 
 
   // Sort the samples in descending order of sample values
@@ -453,7 +411,7 @@ d3.csv("data/airports.csv").then((importedData) => {
   Plotly.newPlot("barChartAirports", chartData, layout, config);
 });
 
-// https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
+
 
 // Handler for the dropdown change
 d3.select('#selDataset').on('change', console.log('Selected'));
