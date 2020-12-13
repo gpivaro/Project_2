@@ -10,10 +10,14 @@ airports_url = "https://raw.githubusercontent.com/jpatokal/openflights/master/da
 
 // To use OpenStreetMap instead of MapBox
 var attribution =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors';
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-var tiles = L.tileLayer(titleUrl, { attribution });
+var streets = L.tileLayer(titleUrl, { attribution });
 
+var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+  // maxZoom: 20,
+  attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+});
 
 //   Markers With Custom Icons
 var aircraftIcon = L.icon({
@@ -41,6 +45,10 @@ var layers = {
   DayNight: new L.LayerGroup()
 };
 
+var baseMaps = {
+  "Dark": Stadia_AlidadeSmoothDark,
+  "Streets": streets
+};
 
 // Creating our initial map object
 // L.map accepts 2 arguments: id of the HTML element to insert the map, and an object containing the initial options for the new map
@@ -68,7 +76,7 @@ var overlays = {
 
 
 // Create a control for our layers, add our overlay layers to it
-L.control.layers(null, overlays).addTo(myMap);
+L.control.layers(baseMaps, overlays).addTo(myMap);
 
 // Create a legend to display information about our map
 var info = L.control({
@@ -182,7 +190,7 @@ d3.json(url).then(function (data) {
     };
 
     var currentCountryAirport = totalAirportsCountry.filter(filterCountry);
-    console.log(currentCountryAirport[0].airports);
+    // console.log(currentCountryAirport[0].airports);
     // Display on the screen the number of cleaned data points 
     document.getElementById('numAirports').textContent = `${currentCountryAirport[0].country}${currentCountryAirport[0].airports.toLocaleString()}`;
 
