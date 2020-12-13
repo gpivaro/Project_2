@@ -254,8 +254,8 @@ d3.json(url).then((data) => {
 
 
   var trace3 = {
-    x: flightData.map(element => element.baro_altitude * 3.28084),
-    y: flightData.map(element => element.velocity * 2.23694),
+    y: flightData.map(element => element.baro_altitude * 3.28084),
+    x: flightData.map(element => element.velocity * 2.23694),
     // text: flightData.map(element => element.callsign),
     text: flightData,
     hovertemplate: 'Callsign: %{text.callsign}<extra></extra>' +
@@ -268,12 +268,12 @@ d3.json(url).then((data) => {
   var data = [trace3];
 
   var layout = {
-    title: "Aircraft Speed vs. Altitude",
+    title: "Aircraft Altitude vs. Speed",
     xaxis: {
-      title: "Altitude (ft) "
+      title: "Speed (mph)"
     },
     yaxis: {
-      title: "Speed (mph) ",
+      title: "Altitude (ft)",
       automargin: true,
     }
   }
