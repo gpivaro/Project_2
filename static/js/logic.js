@@ -293,6 +293,7 @@ d3.json(url).then(function (data) {
   // Display on the screen the number of cleaned data points 
   document.getElementById('numAircrafts').textContent = totalFlightMap.toLocaleString();
 
+  updateLegend(totalFlightMap);
 
   // add marker to map for each flight
   flightData.forEach(function (element) {
@@ -491,3 +492,9 @@ d3.json(url).then(function (data) {
 
 
 });
+
+// Update the legend's innerHTML with the last updated time and station count
+function updateLegend(totalFlightMap) {
+  d3.select(".legend").html(
+    `<p class='out-of-order'>Out of Order Stations: ${totalFlightMap.toLocaleString()}</p>`);
+}
