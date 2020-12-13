@@ -124,7 +124,7 @@ d3.json(url).then(function (data) {
 
     airportData.forEach(function (element) {
       if (element.Country === "United States") {
-        var marker = L.circles([element.Latitude, element.Longitude], {
+        var marker = L.circle([element.Latitude, element.Longitude], {
           // icon: icons['Airports'],
           // fillOpacity: 0.75,
           color: "green",
