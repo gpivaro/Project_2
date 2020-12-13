@@ -13,7 +13,7 @@ var attribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors';
 var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var tiles = L.tileLayer(titleUrl, { attribution });
-tiles.addTo(myMap);
+
 
 //   Markers With Custom Icons
 var aircraftIcon = L.icon({
@@ -59,6 +59,9 @@ var myMap = L.map("map", {
     layers.DayNight
   ]
 });
+
+// Add our tile layer to the map
+tiles.addTo(myMap);
 
 // Create an overlays object to add to the layer control
 var overlays = {
