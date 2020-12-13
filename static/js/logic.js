@@ -102,21 +102,21 @@ d3.json(url).then((data) => {
       // Adjust radius
       //       radius: 20000
     }).bindPopup(`
-    <h5>AirCraft Information</h5>
-    ICAO24 address: <a href='https://opensky-network.org/aircraft-profile?icao24=${element["icao24"]}' target="_blank">link</a><br/>
+    <h5>AirCraft Information</h5><hr>
+    ICAO24 <a href='https://opensky-network.org/aircraft-profile?icao24=${element["icao24"]}' target="_blank">${element["icao24"]}</a><br/>
     Callsign: ${element["callsign"]} <br/>
-    Origin country: ${element["origin_country"]}<br/>
+    Country: ${element["origin_country"]}<br/>
     Time of position update: ${element["time_position"]} (UTC)<br/>
     Time of last update: ${element["last_contact"]} (UTC)<br/>
     Longitude: ${element["longitude"]}<br/>
     Latitude: ${element["latitude"]}<br/>
-    Altitude ${element["baro_altitude"]} m | ${Math.round(element["baro_altitude"] * 3.28084)} ft<br/>
+    Altitude ${element["baro_altitude"].toLocaleString()} m | ${Math.round(element["baro_altitude"] * 3.28084).toLocaleString()} ft<br/>
     On ground: ${element["on_ground"]}<br/>
     Velocity: ${element["velocity"]} m/s | ${Math.round(element["velocity"] * 2.23694)} mph <br/>
     True track: ${element["true_track"]}° (north=0°)<br/>
     Vertical rate: ${element["vertical_rate"]} m/s<br/>
     Sensors ID: ${element["sensors"]}<br/>
-    Geometric altitude: ${element["geo_altitude"]} m | ${Math.round(element["geo_altitude"] * 3.28084)} ft<br/>
+    Geometric altitude: ${element["geo_altitude"].toLocaleString()} m | ${Math.round(element["geo_altitude"] * 3.28084).toLocaleString()} ft<br/>
     Transponder code: ${element["squawk"]}<br/>
     Special purpose indicator: ${element["spi"]}<br/>
     Position_source: ${element["position_source"]}<br/>
