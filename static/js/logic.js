@@ -124,7 +124,7 @@ d3.json(url).then(function (data) {
 
     airportData.forEach(function (element) {
       if (element.Country === "United States") {
-        var circle = L.circle([element.Latitude, element.Longitude], {
+        var marker = L.marker([element.Latitude, element.Longitude], {
           icon: icons[Airports],
           // fillOpacity: 0.75,
           // color: "green",
@@ -147,7 +147,7 @@ d3.json(url).then(function (data) {
                     Type: ${element["Type"]}<br/>
                     Tz database time zone: ${element["Tz database time zone"]}<br/>`
         );
-        circle.addTo(layers['Airports']);
+        marker.addTo(layers['Airports']);
       }
     });
 
