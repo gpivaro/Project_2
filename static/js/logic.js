@@ -14,8 +14,8 @@ var attribution =
 var titleUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var streets = L.tileLayer(titleUrl, { attribution });
 
-var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-  // maxZoom: 20,
+var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+  maxZoom: 20,
   attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
@@ -48,7 +48,7 @@ var layers = {
 };
 
 var baseMaps = {
-  "Dark": Stadia_AlidadeSmoothDark,
+  "Dark": Stadia_AlidadeSmooth,
   "Streets": streets
 };
 
@@ -496,5 +496,6 @@ d3.json(url).then(function (data) {
 // Update the legend's innerHTML with the last updated time and station count
 function updateLegend(totalFlightMap) {
   d3.select(".legend").html(
-    `<p class='out-of-order'>Out of Order Stations: ${totalFlightMap.toLocaleString()}</p>`);
+    `<p class='out-of-order'>Airplanes: ${totalFlightMap.toLocaleString()}</p>`
+      `<p class='out-of-order'>Airplanes: ${totalFlightMap.toLocaleString()}</p>`);
 }
