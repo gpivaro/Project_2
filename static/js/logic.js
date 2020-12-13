@@ -23,9 +23,6 @@ var aircraftIcon = L.icon({
 });
 
 
-
-
-
 /* Date.prototype.toLocaleDateString()
      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
 var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -86,6 +83,20 @@ info.onAdd = function () {
 // Add the info legend to the map
 info.addTo(myMap);
 
+var icons = {
+  Aircrafts: L.ExtraMarkers.icon({
+    icon: "ion-settings",
+    iconColor: "white",
+    markerColor: "yellow",
+    shape: "star"
+  }),
+  Airports: L.ExtraMarkers.icon({
+    icon: "ion-android-bicycle",
+    iconColor: "white",
+    markerColor: "red",
+    shape: "circle"
+  })
+};
 
 
 // Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
