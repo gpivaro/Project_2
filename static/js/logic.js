@@ -84,20 +84,20 @@ info.onAdd = function () {
 // Add the info legend to the map
 info.addTo(myMap);
 
-var icons = {
-  Aircrafts: L.ExtraMarkers.icon({
-    icon: "ion-settings",
-    iconColor: "white",
-    markerColor: "yellow",
-    shape: "star"
-  }),
-  Airports: L.ExtraMarkers.icon({
-    icon: "ion-android-bicycle",
-    iconColor: "white",
-    markerColor: "red",
-    shape: "circle"
-  })
-};
+// var icons = {
+//   Aircrafts: L.ExtraMarkers.icon({
+//     icon: "ion-settings",
+//     iconColor: "white",
+//     markerColor: "yellow",
+//     shape: "star"
+//   }),
+//   Airports: L.ExtraMarkers.icon({
+//     icon: "ion-android-bicycle",
+//     iconColor: "white",
+//     markerColor: "red",
+//     shape: "circle"
+//   })
+// };
 
 
 // Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
@@ -124,13 +124,13 @@ d3.json(url).then(function (data) {
 
     airportData.forEach(function (element) {
       if (element.Country === "United States") {
-        var marker = L.marker([element.Latitude, element.Longitude], {
-          icon: icons['Airports'],
+        var marker = L.circles([element.Latitude, element.Longitude], {
+          // icon: icons['Airports'],
           // fillOpacity: 0.75,
-          // color: "green",
+          color: "green",
           // fillColor: "black",
           // Adjust radius
-          // radius: 2000
+          radius: 2000
         }).bindPopup(`<h3>Airport ID: ${element["Airport ID"]}</h3><hr>
                     Airport ID: ${element["Airport ID"]}<br/>
                     Name: ${element["Name"]}<br/>
@@ -287,8 +287,8 @@ d3.json(url).then(function (data) {
   // add marker to map for each flight
   flightData.forEach(function (element) {
     var marker = L.marker([element.latitude, element.longitude], {
-      icon: icons['Aircraft']
-      // icon: aircraftIcon,
+      // icon: icons['Aircraft']
+      icon: aircraftIcon,
       //       fillOpacity: 0.75,
       //       color: "red",
       //       fillColor: "blue",
