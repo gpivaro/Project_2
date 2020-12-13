@@ -124,11 +124,12 @@ d3.json(url).then(function (data) {
     airportData.forEach(function (element) {
       if (element.Country === "United States") {
         var circle = L.circle([element.Latitude, element.Longitude], {
-          fillOpacity: 0.75,
-          color: "green",
-          fillColor: "black",
+          icon: icons[Airports],
+          // fillOpacity: 0.75,
+          // color: "green",
+          // fillColor: "black",
           // Adjust radius
-          radius: 2000
+          // radius: 2000
         }).bindPopup(`<h3>Airport ID: ${element["Airport ID"]}</h3><hr>
                     Airport ID: ${element["Airport ID"]}<br/>
                     Name: ${element["Name"]}<br/>
