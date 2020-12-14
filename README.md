@@ -7,7 +7,7 @@
 This repository contains the following scenario:
  
 
-## Live Track Dashboard
+## Airtraffic Live Dashboard
 
 This project consists in the creation of a web application dashboard that provide real-time information about the global air traffic. The main view of the dashboard is the following.
 
@@ -17,7 +17,6 @@ The project was deployed in two version. A light version using only JavaScript/H
  
  ---
 
-## Background
 
 ### Data Source
 
@@ -27,7 +26,7 @@ The main data source to build our live tracker dashboard is the free API from [T
 
 The OpenSky Network [live REST API](https://opensky-network.org/api) provides JSON object with geolocation info about the aircrafts using [Automatic Dependent Surveillance–Broadcast (ADS-B)](https://en.wikipedia.org/wiki/Automatic_Dependent_Surveillance%E2%80%93Broadcast). This project queries the The OpenSky Network API every 5 min for the full version of this [dashboard](https://airtraffic-live.herokuapp.com/) and every user access for the [light version](https://airtraffic-live.herokuapp.com/).
 
-Besides the live data described above, this application utilizes airport information based on the data available 
+Besides the live data described above, this application utilizes airport information based on the data available [here](https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat).
 
 
 ### Dashboard Visualizations
@@ -56,71 +55,52 @@ The dashboard provides the following information.
 
 ![4.png](Resources/Images/4.png)
 
+---
 
+### How to Install
 
+* [Data base creation](Database)
 
-### Expansion Opportunites
+* [Query API and update database](scripts)
 
-* https://openflights.org/data.html#airport
+* [Flask web server](app.py)
 
-* https://www.airport-data.com/
+* [HTML](templates)
 
-* https://www.airport-data.com/api/doc.php
-
-* http://www.flyingnut.com/adsbmap/grids/aircraft.html
-
-* https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat
-
-* https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json
-
-* https://www.adsbexchange.com/
-
-* https://www.adsbexchange.com/data/#
-
-* https://www.airport-data.com/airport/36TS/
-
-* http://www.virtualradarserver.co.uk/Documentation/Formats/AircraftList.aspx
-
-* http://www.flyingnut.com/adsbmap/adsbObs.php
-
-* http://www.flyingnut.com/adsbmap/
-
-* https://flightaware.com/live/flight/AFR853/history/20201201/2115Z/SOCA/LFPO/tracklog
-
-* https://www.airport-data.com/aircraft/N139CH.html
-
-
-Convert icao24 to registration number:
-http://www.avionictools.com/icao.php
-Ex: icao24 -> a8102a  ---->  N61898
-Use the registration number (N...) to search for aircraft
-https://flightaware.com/resources/registration/N61898
-
-
-
-
-#### Weather API:
-
-
-
+* [Javascript](static)
 
 ---
 
+### Expansion Opportunites
+
+There are many air traffic data sources that were found while preparing this dashboard that were not explored. The following list some of the resources that can provide more data points to expand this work. 
+
+* [Openflights.org](https://openflights.org/data.html#airport) - Airport, airline and route data;
+
+* [Airport-data.com](https://www.airport-data.com/) and [Airport-data.com/api](https://www.airport-data.com/api/doc.php) - Extensive Aircraft Data;
+
+* [flyingnut.com](http://www.flyingnut.com/adsbmap/grids/aircraft.html) - ADS-B observations;
+
+* [Adsbexchange](https://www.adsbexchange.com/) - World's largest source of unfiltered flight data; [Adsbexchange aircraft list API](https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json) - Aircraft json data; [ADSBexchange.com API](https://rapidapi.com/adsbx/api/adsbexchange-com1)
+
+* [Virtual Radar Server](http://www.virtualradarserver.co.uk/Documentation/Formats/AircraftList.aspx) - This JSON file reports on the state of all of the aircraft tracked by a receiver or merged feed;
+
+* [Flightaware](https://flightaware.com/live/) - Real-time worldwide flight traffic; [Flightaware](https://flightaware.com/resources/registration/) - Use the registration number (N...) to search for aircraft;
+
+* [avionictools](http://www.avionictools.com/icao.php)  - Convert a US aircraft registration (N Number) to the corresponding ICAO address
+
+
 #### Next Steps:
 
-* Connect a database and query the main API every x seconds to keep track of the aircrafts movement.
+* Associate the aircrafts with the airports (to/from);
 
-* Associate the aircrafts with the airports (to/from).
+* Track the airports traffic;
 
-* Track the airports traffic.
+* Add layer for weather;
 
-* Insert dropdown menus for user interaction.
+* Add a search field to the user search by aircraft or airport;
 
-* Add layers for aircrafts, airports, weather, etc.
-
-* Add a search field to the user search by aircraft or airport
-
-* Add stats for individual flights and airports
+* Add stats for individual flights and airports.
 
 
 
