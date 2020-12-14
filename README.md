@@ -60,7 +60,7 @@ The scatter plot on the left shows the relationship between the aircrafts' speed
 
 #### Position Source And Live Aircraft Distribution
 
-The doughnut chart on the left shows the aircrafts by the source position that were reported on the communication messages.
+The doughnut chart on the left shows the aircrafts by the source position that were reported on the communication messages. On the right, the charts diplays the number of aircraft communication messages that were recorded on this application database by hour.
 
 ![4.png](Resources/Images/4.png)
 
@@ -68,7 +68,7 @@ The doughnut chart on the left shows the aircrafts by the source position that w
 
 ### How to Install
 
-* [Data base creation](Database)
+* [Data base creation](Database): create the database based on the schema files ![aircraft_schema.sql](aircraft_schema.sql) and ![airport_schema.sql](airport_schema.sql).
 
 * [Query API and update database](scripts)
 
