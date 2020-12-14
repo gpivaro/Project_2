@@ -35,9 +35,9 @@ The main functionality of the dashboard is two maps shown at the top of this pag
 
 * Maps view:
 
-##### Left MAP: On the left map the user has access to the number of aircrafts currently on the map (global, not only on the selected view) and the time of the last updated information. Below that, the user has access to the total number of aircraft messages that are currently stored on the database. Right below, the user has a dropdown menu to select a Country to be displayed on the map. Once the country is selected, the country name and the total of airports for that country are displayed on the line abover. On the map, the user can either select an aircraft of an airport to obtain more information about it.
+Left MAP: The user has access to the number of aircrafts currently on the map (global, not only on the selected view) and the time of the last updated information. Below that, the user has access to the total number of aircraft messages that are currently stored on the database. Right below, the user has a dropdown menu to select a Country to be displayed on the map. Once the country is selected, the country name and the total of airports for that country are displayed on the line abover. On the map, the user can either select an aircraft of an airport to obtain more information about it.
 
-##### Right Map: 
+Right Map: The user has the information about one specific aircraft. On the first line, the aircraft unique ICAO24 address and the current flight are displayed. The next line shows how many miles that aircraft was travalled based on the data available in this application database. The following line displayes how many different flight that aircraft was and the how many different aircrafts were in that fligth. Underneath that, the user has two dropdown menus to select an aircraft or a fligth to be updated on the map.
 
 ![5.png](Resources/Images/5.png)
 
