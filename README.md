@@ -68,9 +68,9 @@ The doughnut chart on the left shows the aircrafts by the source position that w
 
 ### How to Install
 
-* [Data base creation](Database): create the database based on the schema files ![aircraft_schema.sql](aircraft_schema.sql) and ![airport_schema.sql](airport_schema.sql).
+* [Data base creation](Database): create the database based on the schema files [aircraft_schema.sql](aircraft_schema.sql) and [airport_schema.sql](airport_schema.sql). The notebooks [Airports_Location.ipynb](Airports_Location.ipynb) and [Opensky_API_Data.ipynb](Opensky_API_Data.ipynb) help to understand how the field are created for each table .
 
-* [Query API and update database](scripts)
+* [Query API and update database](scripts): the scripts are used to update the database and query the database.
 
 * [Flask web server](app.py)
 
