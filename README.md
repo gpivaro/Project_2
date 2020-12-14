@@ -41,10 +41,10 @@ Right Map: The user has the information about one specific aircraft. On the firs
 
 ![5.png](Resources/Images/5.png)
 
+On both maps, the user can click either on the aircraft or airport to open a popup to obtain more information about the selected item.
+
 ![6.png](Resources/Images/6.png)
-![7.png](Resources/Images/7.png)
-![8.png](Resources/Images/8.png)
-![9.png](Resources/Images/9.png)
+
 
 #### Aircrafts and Airports by Country
 
