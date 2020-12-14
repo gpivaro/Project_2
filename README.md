@@ -54,9 +54,13 @@ These horizontal bar charts provide the information on the top 10 origin country
 
 #### Altitude and Speed Relationship
 
+The scatter plot on the left shows the relationship between the aircrafts' speed and altitude. On the right, we have a histogram with the number of aircrafts by the altitude.
+
 ![3.png](Resources/Images/3.png)
 
 #### Position Source And Live Aircraft Distribution
+
+The doughnut chart on the left shows the aircrafts by the source position that were reported on the communication messages.
 
 ![4.png](Resources/Images/4.png)
 
