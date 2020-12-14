@@ -33,11 +33,12 @@ Besides the live data described above, this application utilizes airport informa
 
 The main functionality of the dashboard is two maps shown at the top of this page. The dashboard is intended to provide means for the user access several different information as described below.
 
-* General information
+* Maps view:
 
-The dashboard provides the following information. 
+On the left map the user has access to the number of aircrafts currently on the map (global, not only on the selected view) and the time of the last updated information. Below that, the user has access to the total number of aircraft messages that are currently stored on the database. Right below, the user has a dropdown menu to select a Country to be displayed on the map. Once the country is selected, the country name and the total of airports for that country are displayed on the line abover.
 
 ![5.png](Resources/Images/5.png)
+
 ![6.png](Resources/Images/6.png)
 ![7.png](Resources/Images/7.png)
 ![8.png](Resources/Images/8.png)
