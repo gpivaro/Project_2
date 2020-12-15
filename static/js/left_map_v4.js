@@ -524,7 +524,7 @@ function generateDataBaseSizePlots(queryData) {
 url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
 d3.json(url_aircrafts_hour).then((queryData) => {
     // console.log(queryData);
-    generateDataBaseSizePlots(queryData)
+    // generateDataBaseSizePlots(queryData)
 
 })
 

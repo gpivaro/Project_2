@@ -79,6 +79,13 @@ LIMIT 10;
 SELECT DISTINCT
     icao24
 FROM
-    project_2.aircraft_data;
+    project_2.aircraft_data
+LIMIT 500;
 
 
+-- Retrieve unique icao24 to save it and use to retrieve aircraft info later 
+SELECT DISTINCT
+    icao24
+FROM
+    project_2.aircraft_data
+ORDER BY icao24;

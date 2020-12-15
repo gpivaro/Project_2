@@ -31,6 +31,17 @@ except KeyError:
 # Create the engine to connect to the database
 engine = create_engine(database_uri)
 
+# Query database for airport data that will be always the same
+airports_df_all = pd.read_sql(
+            f"""
+            SELECT 
+                * 
+            FROM 
+                {table_airports};
+            """,
+            engine)
+
+
 
 #################################################
 # Flask Setup
@@ -99,27 +110,22 @@ def api_aircrafts():
 def api_airports(country):
 
     if f"{country}" == 'ALL':
-        airports_df = pd.read_sql(
-            f"""
-            SELECT 
-                * 
-            FROM 
-                {table_airports};
-            """,
-            engine)
+        airports_df = airports_df_all
+        
     else:
-        airports_df = pd.read_sql(
-            f"""
-            SELECT 
-                * 
-            FROM 
-                {table_airports}
-            WHERE
-                Country = '{country}' 
-            ORDER BY 
-                AirportID;
-            """,
-            engine)
+        airports_df = airports_df_all.loc[airports_df_all['Country']==f"{country}"]
+        # airports_df = pd.read_sql(
+        #     f"""
+        #     SELECT 
+        #         * 
+        #     FROM 
+        #         {table_airports}
+        #     WHERE
+        #         Country = '{country}' 
+        #     ORDER BY 
+        #         AirportID;
+        #     """,
+        #     engine)
 
     result = airports_df.to_json(orient="records")
     parsed = json.loads(result)
