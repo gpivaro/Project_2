@@ -414,6 +414,13 @@ d3.json(url).then(function (data) {
   };
 
   Plotly.newPlot('baroAltitudeHist', histData, layout, config, { displayModeBar: false });
+  
+  baroAltitudeHist.on('plotly_click', function(e){
+    console.log(e);
+    var icaoNumber = e.points[0].text.icao24;
+    console.log(icaoNumber)
+    window.open(`https://opensky-network.org/aircraft-profile?icao24=${icaoNumber}`);
+  });
 
 
   var posSource = [];
@@ -469,8 +476,8 @@ d3.json(url).then(function (data) {
     x: flightData.map(element => element.velocity * 2.23694),
     // text: flightData.map(element => element.callsign),
     text: flightData,
-    hovertemplate: 'Callsign: %{text.callsign}<extra></extra>' +
-      '<br>Vertical rate: %{text.vertical_rate}',
+    hovertemplate: 'Aircraft Info:<hr>'+'<br>ICAO24: %{text.icao24}<extra></extra>'+'<hr>Callsign: %{text.callsign}<extra></extra>' +
+      '<br>Vertical rate: %{text.vertical_rate}' + '<br>Click for more info.',
     mode: 'markers',
     type: 'scatter'
   };
