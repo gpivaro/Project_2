@@ -491,7 +491,11 @@ d3.json(url).then(function (data) {
 
   Plotly.newPlot('scatterVelAltitude', data, layout, config);
   
-  scatterVelAltitude.on('plotly_click', function(e){console.log(e)});
+  scatterVelAltitude.on('plotly_click', function(e){
+    console.log(e);
+    console.log(e.points.text)
+  });
+  
 
 
 });
