@@ -19,6 +19,8 @@ var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alida
   attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
+// Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
+var dayNightLayer = L.terminator();
 
 
 //   Markers With Custom Icons
@@ -44,11 +46,11 @@ var config = {
 var layers = {
   Aircrafts: new L.LayerGroup(),
   Airports: new L.LayerGroup(),
-  DayNight: new L.LayerGroup()
+  DayNight: dayNightLayer,
 };
 
 var baseMaps = {
-  "Dark": Stadia_AlidadeSmooth,
+  "Gray": Stadia_AlidadeSmooth,
   "Streets": streets
 };
 
@@ -73,7 +75,8 @@ streets.addTo(myMap);
 // Create an overlays object to add to the layer control
 var overlays = {
   "Aircrafts": layers.Aircrafts,
-  "Airports": layers.Airports
+  "Airports": layers.Airports,
+  "Day/Night": layers.DayNight
 };
 
 
@@ -110,8 +113,6 @@ info.addTo(myMap);
 // };
 
 
-// Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
-// L.terminator();
 
 
 
