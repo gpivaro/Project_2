@@ -476,8 +476,9 @@ d3.json(url).then(function (data) {
     x: flightData.map(element => element.velocity * 2.23694),
     // text: flightData.map(element => element.callsign),
     text: flightData,
-    hovertemplate: "<b>Aircraft Info:</b><br><br>"+"ICAO24: %{text.icao24}<extra></extra><br>"+"Callsign: %{text.callsign}<extra></extra><br>" +
-      "Vertical rate: %{text.vertical_rate}<br>" + "Click on the dot formore info.",
+    hovertemplate: "<b>Aircraft Info:</b><br><br><hr>" + "ICAO24: %{text.icao24}<br>" + "Callsign: %{text.callsign}<br>" +
+      "Vertical rate: %{text.vertical_rate} m/s<br>" + "Altitude ${(text.baro_altitude)} m | ${(Math.round(text.baro_altitude * 3.28084))} ft<br>"+ 
+    "Click on the dot for more info.",
     mode: 'markers',
     type: 'scatter'
   };
