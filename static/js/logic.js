@@ -415,13 +415,6 @@ d3.json(url).then(function (data) {
 
   Plotly.newPlot('baroAltitudeHist', histData, layout, config, { displayModeBar: false });
   
-  baroAltitudeHist.on('plotly_click', function(e){
-    console.log(e);
-    var icaoNumber = e.points[0].text.icao24;
-    console.log(icaoNumber)
-    window.open(`https://opensky-network.org/aircraft-profile?icao24=${icaoNumber}`);
-  });
-
 
   var posSource = [];
   var ADSB = 0; var ASTERIX = 0; var MLAT = 0;
