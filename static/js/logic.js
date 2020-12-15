@@ -493,7 +493,9 @@ d3.json(url).then(function (data) {
   
   scatterVelAltitude.on('plotly_click', function(e){
     console.log(e);
-    console.log(e.points[0].icao24)
+    var icaoNumber = parseInt(e.points[0].text.icao24);
+    console.log(icaoNumber)
+    window.open(`https://opensky-network.org/aircraft-profile?icao24=${icaoNumber}`);
   });
   
 
