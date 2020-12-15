@@ -490,6 +490,8 @@ d3.json(url).then(function (data) {
   }
 
   Plotly.newPlot('scatterVelAltitude', data, layout, config);
+  
+  scatterVelAltitude.on('plotly_click', function(data){console.log(data)});
 
 
 });
