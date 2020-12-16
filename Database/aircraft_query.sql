@@ -1,8 +1,8 @@
 SELECT 
-    *
+    Count(*)
 FROM
     project_2.aircraft_data
-ORDER BY id DESC
+ORDER BY id
 LIMIT 15;
 
 
@@ -66,3 +66,26 @@ FROM
 GROUP BY icao24
 ORDER BY averageVelocity DESC
 LIMIT 10;
+
+-- Count the distinct icao24 
+SELECT 
+    COUNT(DISTINCT icao24)
+FROM
+    project_2.aircraft_data
+LIMIT 10;
+
+
+-- Retrieve unique icao24 to save it and use to retrieve aircraft info later 
+SELECT DISTINCT
+    icao24
+FROM
+    project_2.aircraft_data
+LIMIT 500;
+
+
+-- Retrieve unique icao24 to save it and use to retrieve aircraft info later 
+SELECT DISTINCT
+    icao24
+FROM
+    project_2.aircraft_data
+ORDER BY icao24;

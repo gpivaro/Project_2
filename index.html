@@ -5,6 +5,13 @@
   <meta charset="utf-8">
   <title>Real-Time Air Traffic Map</title>
 
+  <!-- Favicon from favicon.io -->
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png"> -->
+  <!-- <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png"> -->
+  <!-- <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png"> -->
+  <!-- <link rel="manifest" href="/static/images/site.webmanifest"> -->
+
   <!-- jQuery and JS bundle w/ Popper.js -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -36,6 +43,15 @@
   <!-- Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator -->
   <script src="https://unpkg.com/leaflet"></script>
   <script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
+
+  <!-- Icons -->
+  <!-- <script src="/static/js/leaflet.extra-markers.min.js"></script> -->
+
+  <!-- Icons -->
+  <!-- <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+  <!-- <link rel="stylesheet" href="static/css/leaflet.extra-markers.min.css"> -->
+
+
 </head>
 
 <body>
@@ -51,10 +67,10 @@
     Number of airports currently on the map: <span id="numAirports" style="color:green"></span>
   </p>
 
-  <select id="selDataset">
+  <!--   <select id="selDataset">
     <option value="Houston">Houston</option>
     <option value="Forth Worth">Forth Worth</option>
-  </select>
+  </select> -->
 
   <!-- The div where we will inject our map -->
   <div id="map"></div>

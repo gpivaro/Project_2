@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, render_template, url_for
 from sqlalchemy import create_engine
-# from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
 import json
@@ -15,7 +14,6 @@ try:
     from api_keys import mysql_pass_project2
 except:
     pass
-
 
 
 # Database name and database tables
@@ -33,6 +31,17 @@ except KeyError:
 # Create the engine to connect to the database
 engine = create_engine(database_uri)
 
+# Query database for airport data that will be always the same
+airports_df_all = pd.read_sql(
+            f"""
+            SELECT 
+                * 
+            FROM 
+                {table_airports};
+            """,
+            engine)
+
+
 
 #################################################
 # Flask Setup
@@ -40,27 +49,16 @@ engine = create_engine(database_uri)
 app = Flask(__name__)
 
 
-# # SQLite for performance reason
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-# db = SQLAlchemy(app)
-
-
 #################################################
 # Flask Routes
 #################################################
 # Use Flask to create your routes.
 
-# Route
-
 # Home page.
 @app.route("/")
 def welcome():
-    return render_template("index_Gabriel_v3.html")
+    return render_template("index_Gabriel_v4.html")
 
-# Home page.
-@app.route("/aircrafts")
-def aircraft_analysis():
-    return render_template("icao24_View_Gabriel.html")
 
 # Home page.
 @app.route("/sarah")
@@ -112,29 +110,22 @@ def api_aircrafts():
 def api_airports(country):
 
     if f"{country}" == 'ALL':
-        airports_df = pd.read_sql(
-            f"""
-            SELECT 
-                * 
-            FROM 
-                {table_airports}
-            ORDER BY 
-                AirportID;
-            """,
-            engine)
+        airports_df = airports_df_all
+        
     else:
-        airports_df = pd.read_sql(
-            f"""
-            SELECT 
-                * 
-            FROM 
-                {table_airports}
-            WHERE
-                Country = '{country}' 
-            ORDER BY 
-                AirportID;
-            """,
-            engine)
+        airports_df = airports_df_all.loc[airports_df_all['Country']==f"{country}"]
+        # airports_df = pd.read_sql(
+        #     f"""
+        #     SELECT 
+        #         * 
+        #     FROM 
+        #         {table_airports}
+        #     WHERE
+        #         Country = '{country}' 
+        #     ORDER BY 
+        #         AirportID;
+        #     """,
+        #     engine)
 
     result = airports_df.to_json(orient="records")
     parsed = json.loads(result)
@@ -205,41 +196,6 @@ def api_aircrafts_byhour():
     result = aircraft_hour.to_json(orient="records")
     parsed = json.loads(result)
     return jsonify(parsed)
-
-
-
-# # Return a json with the query results for the aircraft table
-# @app.route("/api/v1.0/aircraft-icao24/<icao24>")
-# def api_aircraft_data(icao24):
-
-#     df = pd.read_sql(f"""
-#                     SELECT 
-#                         *
-#                     FROM
-#                         {table_airplanes}
-#                     WHERE
-#                         longitude IS NOT NULL
-#                     AND
-#                         icao24 = '{icao24}';
-#                     """,
-#             engine)
-
-#     # Calculate the distance between two coordinates
-#     df['distance_traveled'] = ''
-#     for index,row in df.iterrows():
-#     #     print((row['latitude'],row['longitude']))
-#         try:
-#             coords_1 = (df['latitude'].iloc[index],df['longitude'].iloc[index])
-#             coords_2 = ((df['latitude'].iloc[index+1],df['longitude'].iloc[index+1]))
-#             distance_mi = round(geopy.distance.geodesic(coords_1, coords_2).mi*10)/10
-#             df['distance_traveled'].iloc[index] = distance_mi
-#         except:
-#             pass
-
-#     result = df.to_json(orient="records")
-#     parsed = json.loads(result)
-#     return jsonify(parsed)
-
 
 # The server is set to run on the computer IP address on the port 5100
 # Go to your http://ipaddress:5100

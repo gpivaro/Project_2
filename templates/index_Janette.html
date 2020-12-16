@@ -31,7 +31,7 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <!-- Our CSS -->
-  <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/styleJC.css">
 
   <!-- Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator -->
   <script src="https://unpkg.com/leaflet"></script>
@@ -42,23 +42,60 @@
 </head>
 
 <body>
+  <div class="container">
+      <div class="row">
+          <div class="col-7">
+              <div>
+                  <!-- <div style="margin-top:3%;"> -->
+                  <h1>Real-Time Air Traffic Map</h1>
+                  <!-- <p style="margin-bottom: 5%;"> -->
 
-  <div style="margin-left: 2%; margin-top:1%">
-    <h1>Real-Time Air Traffic Map</h1>
-    <p>
-      Number of aircrafts on the map: <span id="numAircrafts" style="color: red; font-weight: bold;"></span>
-    </p>
-    <p>
-      Number aircraft records on the database: <span id="totalAircraftDatabase" style="font-weight: bold;"></span>
-    </p>
-    <p>
-      Number of airports on the database: <span id="totalNumAirports" style="font-weight: bold; color:green"></span>
-    </p>
+                  Aircrafts on the map (global): <span id="numAircrafts"
+                      style="color: red; font-weight: bold;"></span><br />
+                  Aircraft position records on the database: <span id="totalAircraftDatabase"
+                      style="font-weight: bold;"></span><br />
+                  Total airports for: <span id="totalNumAirports" style="font-weight: bold; color:green"></span><br />
+
+                  <label for="cars">Airports:</label>
+                  <select id="selectAirportCountry">
+                      <option value="" disabled selected hidden>Choose a country</option>
+                  </select>
+                  <div id="map"></div>
+              </div>
+          </div>
+          <div class="col-5">
+              <div>
+                  <!-- <div style="margin-top:3%;"> -->
+                  <h1>Aircraft Analysis</h1>
+                  Aircraft: <span id="aircraftICAO"
+                      style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Flight: <span id="aircraftCallsign" style="font-weight: bold;"></span><br />
+                  Distance traveled: <span id="totalDistance" style="font-weight: bold; color:blue"></span><br />
+                  Different flights: <span id="aircraftCallsignICAO"
+                      style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Different aircrafts on this flight: <span id="aircraftICAOFlight"
+                      style="font-weight: bold;"></span><br />
+                  <label for="cars">Aircraft:</label>
+                  <select id="selectICAO24">
+                      <option value="" disabled selected hidden>Choose an aircraft</option>
+                  </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label for="cars">Flight:</label>
+                  <select id="selectCallsign">
+                      <option value="" disabled selected hidden>Choose a flight</option>
+                  </select>
+                  <div id="mapAircraft"></div>
+              </div>
+          </div>
+      </div>
+      <hr>
   </div>
 
   <div>
     <select>
       <option value="airportCity">Houston</option>
+      <option value="airportCity">Dallas</option>
+      <option value="airportCity">New York</option>
+      <option value="airportCity">Los Angeles</option>
     </select>
   </div>
 
