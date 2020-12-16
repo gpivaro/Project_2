@@ -9,6 +9,11 @@ var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alida
     attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
+var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+    maxZoom: 20,
+    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+});
+
 // Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
 var dayNightLayer = L.terminator();
 
@@ -20,8 +25,9 @@ var layersRightMap = {
 };
 
 var baseMaps = {
+    "Streets": streets,
     "Gray": Stadia_AlidadeSmooth,
-    "Streets": streets
+    "Dark": Stadia_AlidadeSmoothDark
 };
 
 // Creating our initial map object
@@ -76,12 +82,23 @@ function distCalc(origin, destination) {
 // function to access the api and get the json data based on icao24
 function getDataICAO(icao24) {
     url_icao24 = `api/v1.0/aircrafts-data/icao24/${icao24}`
+
+    // Clear the layers before redraw the map
+    layersRightMap.RoutePoints.clearLayers();
+    layersRightMap.RouteLines.clearLayers();
+
     d3.json(url_icao24).then((importData) => { createMarker(importData) });
+
 };
 
 // function to access the api and get the json data based on callsign
 function getDataCallsign(callsign) {
     url_icao24 = `/api/v1.0/aircrafts-data/callsign/${callsign}`
+
+    // Clear the layers before redraw the map
+    layersRightMap.RoutePoints.clearLayers();
+    layersRightMap.RouteLines.clearLayers();
+
     d3.json(url_icao24).then((importData) => { createMarker(importData) });
 };
 
@@ -154,6 +171,11 @@ function updatePageCallsign() {
     // Select the dropdown and set the variable with the value of the dropdown
     var dropdown = d3.select('#selectCallsign');
     var dropdownValue = dropdown.property('value');
+
+    // Clear the layers before redraw the map
+    layersRightMap.RoutePoints.clearLayers();
+    layersRightMap.RouteLines.clearLayers();
+
 
     // Pass the selected value to the function that will 
     // get the data based on the selected value
@@ -247,8 +269,8 @@ function createMarker(data) {
 
 
 // Initialize the map
-getDataICAO('ace6e2');
-// getDataCallsign('DAL952')
+// getDataICAO('ace6e2');
+getDataCallsign('DAL952')
 
 // loadDropdown();
 

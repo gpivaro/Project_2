@@ -46,12 +46,32 @@
 </head>
 
 <body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index_Gabriel_v4.html">Air Traffic Tracker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/v1.0">API</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/gpivaro/project_2/">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- nav bar -->
     <div class="container">
         <div class="row">
-            <div class="col-7">
-                <div>
+            <div class="col-12 col-xl-7">
+                <div style=margin-top:2%;>
                     <!-- <div style="margin-left: 2%; margin-top:1%; margin-right: 2%;"> -->
-                    <h1>Real-Time Air Traffic Map</h1>
+                    <h3>Real-Time Air Traffic Map</h3>
                     <!-- <p style="margin-bottom: 5%;"> -->
 
                     Aircrafts on the map (global): <span id="numAircrafts"
@@ -69,10 +89,10 @@
                     <div id="map"></div>
                 </div>
             </div>
-            <div class="col-5">
-                <div>
+            <div class="col-12 col-xl-5">
+                <div style=margin-top:2%;>
                     <!-- <div style="margin-left: 2%; margin-top:1%; margin-right: 2%;"> -->
-                    <h1>Aircraft Analysis</h1>
+                    <h3>Aircraft Analysis</h3>
                     Aircraft: <span id="aircraftICAO"
                         style="font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Flight: <span id="aircraftCallsign" style="font-weight: bold;"></span><br />
@@ -98,44 +118,44 @@
 
 
 
-    <div class="plots">
-        <!-- The div where we will inject our map -->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <div id="scatterVelAltitude"></div>
-                </div>
-                <div class="col-sm">
-                    <div id="baroAltitudeHist"></div>
-                </div>
+    <!-- <div class="plots"> -->
+    <!-- The div where we will inject our map -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <div id="scatterVelAltitude"></div>
             </div>
-            <hr>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <div id="barChart"></div>
-                </div>
-                <div class="col-sm">
-                    <div id="barChartAirports"></div>
-                </div>
-            </div>
-            <hr>
-        </div>
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-3" style="padding-right: 25%;">
-                    <div id="positionSourcePlot"></div>
-                </div>
-                <div class="col-7">
-                    <!-- Canvas for ChartsJS plot -->
-                    <canvas id="myChart" width="80%" height="50%"></canvas>
-                </div>
+            <div class="col-12 col-xl-6">
+                <div id="baroAltitudeHist"></div>
             </div>
         </div>
-
-        <!-- <div id="airplaneMap"></div> -->
+        <hr>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <div id="barChart"></div>
+            </div>
+            <div class="col-12 col-xl-6">
+                <div id="barChartAirports"></div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-12 col-xl-3" style="padding-right: 25%;">
+                <div id="positionSourcePlot"></div>
+            </div>
+            <div class="col-12 col-xl-7">
+                <!-- Canvas for ChartsJS plot -->
+                <canvas id="myChart" width="80%" height="50%"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="airplaneMap"></div> -->
+    <!-- </div> -->
 
 
 

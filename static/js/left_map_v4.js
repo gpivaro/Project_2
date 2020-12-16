@@ -19,6 +19,11 @@ var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alida
     attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
 
+var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+    maxZoom: 20,
+    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+});
+
 // Leaflet.Terminator https://github.com/joergdietrich/Leaflet.Terminator
 var dayNightLayer = L.terminator();
 
@@ -30,8 +35,9 @@ var layersLeftMap = {
 };
 
 var baseMaps = {
+    "Streets": streets,
     "Gray": Stadia_AlidadeSmooth,
-    "Streets": streets
+    "Dark": Stadia_AlidadeSmoothDark
 };
 
 // Creating our initial map object
@@ -297,7 +303,9 @@ function generateAirCraftPlots(flightData) {
         },
         yaxis: {
             automargin: true,
-        }
+        },
+        // plot_bgcolor: "black",
+        // paper_bgcolor: "slategrey"
     }
 
     // Render the plot to the div tag id "plot"
@@ -320,7 +328,8 @@ function generateAirCraftPlots(flightData) {
         yaxis: {
             title: "Frequency",
             automargin: true,
-        }
+        },
+        // paper_bgcolor: "slategrey"
     };
 
     Plotly.newPlot('baroAltitudeHist', histData, layout, config, { displayModeBar: false });
@@ -363,8 +372,8 @@ function generateAirCraftPlots(flightData) {
         width: 500,
         margin: { "t": 35, "b": 0, "l": 0, "r": 10 },
         showlegend: true,
-        legend: { "orientation": "h" }
-
+        legend: { "orientation": "h" },
+        // paper_bgcolor: "slategrey"
         // grid: { rows: 1, columns: 1 }
     };
 
@@ -377,10 +386,10 @@ function generateAirCraftPlots(flightData) {
         x: flightData.map(element => element.velocity * 2.23694),
         // text: flightData.map(element => element.callsign),
         text: flightData,
-        hovertemplate: 'Callsign: %{text.callsign}<extra></extra>' +
-            '<br>Vertical rate: %{text.vertical_rate}',
         mode: 'markers',
-        type: 'scatter'
+        type: 'scatter',
+        hovertemplate: "<b>Aircraft Info:</b><br><br>" + "ICAO24: %{text.icao24}<br>" + "Flight: %{text.callsign}<br>" +
+            "Vertical rate: %{text.vertical_rate:,} m/s<br>" + "Altitude %{text.baro_altitude:,} m<br>" + "Click on the dot for more info."
     };
 
     var data = [trace3];
@@ -393,10 +402,20 @@ function generateAirCraftPlots(flightData) {
         yaxis: {
             title: "Altitude (ft) ",
             automargin: true,
-        }
+        },
+        // paper_bgcolor: "slategrey"
     }
 
     Plotly.newPlot('scatterVelAltitude', data, layout, config);
+
+    scatterVelAltitude.on('plotly_click', function (e) {
+        console.log(e);
+        var icaoNumber = e.points[0].text.icao24;
+        console.log(icaoNumber)
+        getDataICAO(`${icaoNumber}`);
+        alert(`The route for ${icaoNumber} will be displayed on the right map.`)
+        window.open(`https://opensky-network.org/aircraft-profile?icao24=${icaoNumber}`);
+    });
 
 }
 
@@ -468,7 +487,8 @@ function generateAirportPlots(airportData) {
         },
         yaxis: {
             automargin: true,
-        }
+        },
+        // paper_bgcolor: "slategrey"
     }
 
     // Render the plot to the div tag id "plot"
@@ -524,12 +544,9 @@ function generateDataBaseSizePlots(queryData) {
 url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
 d3.json(url_aircrafts_hour).then((queryData) => {
     // console.log(queryData);
-    // generateDataBaseSizePlots(queryData)
+    generateDataBaseSizePlots(queryData)
 
 })
-
-
-
 
 
 
