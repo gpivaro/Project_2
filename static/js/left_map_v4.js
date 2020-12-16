@@ -105,8 +105,6 @@ function aircraftLayer(flightData) {
     var totalFlightMap = flightData.length;
     document.getElementById('numAircrafts').textContent = `${totalFlightMap.toLocaleString()} (${formatDate(flightData[0].time)})`;
 
-    // Display on the screen the number of cleaned data points 
-    document.getElementById('totalAircraftDatabase').textContent = `${flightData[0].id.toLocaleString()}`;
 
     // add markers to the aircraft layer
     flightData.forEach(function (element) {
@@ -411,10 +409,13 @@ function generateAirCraftPlots(flightData) {
     scatterVelAltitude.on('plotly_click', function (e) {
         console.log(e);
         var icaoNumber = e.points[0].text.icao24;
-        console.log(icaoNumber)
+        // console.log(icaoNumber)
+        // execute the function to redraw the map after the user click on the dot
         getDataICAO(`${icaoNumber}`);
+        // display an alert message about the map
         alert(`The route for ${icaoNumber} will be displayed on the right map.`)
-        window.open(`https://opensky-network.org/aircraft-profile?icao24=${icaoNumber}`);
+        // To open a new window to redirect for more info
+        // window.open(`https://opensky-network.org/aircraft-profile?icao24=${icaoNumber}`);
     });
 
 }
@@ -544,7 +545,15 @@ function generateDataBaseSizePlots(queryData) {
 url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
 d3.json(url_aircrafts_hour).then((queryData) => {
     // console.log(queryData);
-    generateDataBaseSizePlots(queryData)
+    // generateDataBaseSizePlots(queryData)
+    totalValues = 0;
+    queryData.forEach(element => {
+        totalValues = totalValues + element.totalDataPoints
+    });
+    console.log(totalValues);
+    // Display on the screen the number of cleaned data points 
+    document.getElementById('totalAircraftDatabase').textContent = `${totalValues.toLocaleString()}`;
+
 
 })
 

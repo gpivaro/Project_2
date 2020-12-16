@@ -1,3 +1,9 @@
+// Responsive chart and hide control buttons on Plotly charts
+var config = {
+    responsive: true,
+    displayModeBar: false
+};
+
 // To use OpenStreetMap default tile layer
 var streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

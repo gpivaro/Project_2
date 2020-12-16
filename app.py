@@ -69,12 +69,12 @@ def home():
 @app.route("/api/v1.0/")
 def api_routes():
     return (
-        f"<h3>API routes available:</h3>"
-        f"/aircrafts-data<br/>"
-        f"/airports-data<br/>"
-        f"/api/v1.0/aircrafts-data/icao24/<icao24><br/>"
-        f"/api/v1.0/aircrafts-data/callsign/<callsign><br/>"
-        f"/api/v1.0/aircrafts-data/byhour"
+        f"<h3>API end points available:</h3>"
+        f"/aircrafts-data/<br/>"
+        f"/airports-data/enter_country_name<br/>"
+        f"/aircrafts-data/icao24/enter_icao24<br/>"
+        f"/aircrafts-data/callsign/enter_callsign<br/>"
+        f"/aircrafts-data/byhour"
     )
 
 # Return a json with the query results for the aircrafts table
@@ -114,19 +114,6 @@ def api_airports(country):
         
     else:
         airports_df = airports_df_all.loc[airports_df_all['Country']==f"{country}"]
-        # airports_df = pd.read_sql(
-        #     f"""
-        #     SELECT 
-        #         * 
-        #     FROM 
-        #         {table_airports}
-        #     WHERE
-        #         Country = '{country}' 
-        #     ORDER BY 
-        #         AirportID;
-        #     """,
-        #     engine)
-
     result = airports_df.to_json(orient="records")
     parsed = json.loads(result)
 
