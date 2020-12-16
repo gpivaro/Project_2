@@ -30,6 +30,34 @@ var aircraftIcon = L.icon({
   // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
+//   Markers With Custom Icons
+var aircraftIcon0 = L.icon({
+  iconUrl: 'static/images/aircraft_0deg.svg',
+  iconSize: [38 / 4, 95 / 4], // size of the icon
+  // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+//   Markers With Custom Icons
+var aircraftIcon90 = L.icon({
+  iconUrl: 'static/images/aircraft_90deg.svg',
+  iconSize: [38 / 4, 95 / 4], // size of the icon
+  // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+//   Markers With Custom Icons
+var aircraftIcon180 = L.icon({
+  iconUrl: 'static/images/aircraft_180deg.svg',
+  iconSize: [38 / 4, 95 / 4], // size of the icon
+  // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+//   Markers With Custom Icons
+var aircraftIcon270 = L.icon({
+  iconUrl: 'static/images/aircraft_270deg.svg',
+  iconSize: [38 / 4, 95 / 4], // size of the icon
+  // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
 
 /* Date.prototype.toLocaleDateString()
      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString */
@@ -301,6 +329,7 @@ d3.json(url).then(function (data) {
     var marker = L.marker([element.latitude, element.longitude], {
       // icon: icons['Aircraft']
       icon: aircraftIcon,
+//       var element.true_track = if(element.true_track > 90 ){icon: aircraftIcon90},
       //       fillOpacity: 0.75,
       //       color: "red",
       //       fillColor: "blue",
