@@ -407,7 +407,7 @@ function generateAirCraftPlots(flightData) {
     Plotly.newPlot('scatterVelAltitude', data, layout, config);
 
     scatterVelAltitude.on('plotly_click', function (e) {
-        console.log(e);
+        // console.log(e);
         var icaoNumber = e.points[0].text.icao24;
         // console.log(icaoNumber)
         // execute the function to redraw the map after the user click on the dot
@@ -545,7 +545,7 @@ function generateDataBaseSizePlots(queryData) {
 url_aircrafts_hour = "/api/v1.0/aircrafts-data/byhour"
 d3.json(url_aircrafts_hour).then((queryData) => {
     // console.log(queryData);
-    // generateDataBaseSizePlots(queryData)
+    generateDataBaseSizePlots(queryData)
     totalValues = 0;
     queryData.forEach(element => {
         totalValues = totalValues + element.totalDataPoints

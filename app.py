@@ -6,7 +6,7 @@ import json
 import geopy.distance
 import requests
 
-# # Import database user and password
+# Import database user and password
 try:
     from api_keys import mysql_hostname
     from api_keys import mysql_port
