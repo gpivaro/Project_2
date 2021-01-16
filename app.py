@@ -105,8 +105,8 @@ def home():
     return render_template("index_sarah.html")
 
 # Return the APIs route available
-@app.route("/api/v1.0/")
-def api_routes():
+@app.route("/routes")
+def routes():
     return (
         f"<h3>API end points available:</h3>"
         f"/aircrafts-data/<br/>"
