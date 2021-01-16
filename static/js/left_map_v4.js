@@ -221,9 +221,13 @@ function createDropdownMenuAirPort(importData) {
 // Initialize the map once the page loads for the first time
 function initMap() {
     // Initialize the page
-    createLayerAircrafts(aircrafts_api_url);
+    // Load only Brazil fligths to speed the page loading
+    createLayerAircrafts("/api/v1.0/aircrafts-data/Brazil");
     createAirportsLayer("/api/v1.0/airports-data/Brazil");
     loadDropdownAirport();
+
+    // Load all fligths
+    createLayerAircrafts(`/api/v1.0/aircrafts-data/ALL`);
 }
 
 
@@ -235,9 +239,12 @@ function updateAirportCountry() {
 
     // Clear layers --> https://jsfiddle.net/chk1/g2zcrhr1/
     layersLeftMap.Airports.clearLayers();
+    // layersLeftMap.Aircrafts.clearLayers();
+
 
     // Call the function that generate the airport layer
     createAirportsLayer(`/api/v1.0/airports-data/${dropdownValue}`);
+    // createLayerAircrafts(`/api/v1.0/aircrafts-data/${dropdownValue}`);
 
 
 };
@@ -553,7 +560,6 @@ d3.json(url_aircrafts_hour).then((queryData) => {
     console.log(totalValues);
     // Display on the screen the number of cleaned data points 
     document.getElementById('totalAircraftDatabase').textContent = `${totalValues.toLocaleString()}`;
-
 
 })
 
