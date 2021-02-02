@@ -1,11 +1,11 @@
 import mysql.connector
 import json
 
-#Function to connect to the MySQL database and add one record to the database """
+# Function to connect to the MySQL database and add one record to the database """
 
 # Database variables:
-database_name = "project_2"  # the name of the target database
-table_name = "aircraft_data"
+database_name = "djangowebsite"  # the name of the target database
+table_name = "airtrafficapp_aircrafts"
 
 # import database_credentials as dbkeys
 with open("/etc/config.json") as config_file:
@@ -14,25 +14,25 @@ with open("/etc/config.json") as config_file:
 # Create a function to connect to the MYSQL server
 def database_connect(hostname, username, password, database=database_name):
     mydb = mysql.connector.connect(
-        host=hostname,
-        user=username,
-        passwd=password,
-        database=database
+        host=hostname, user=username, passwd=password, database=database
     )
     return mydb
+
 
 # Return an object containing the MYSQL connection
 mydb = database_connect(
     config.get("MYSQL_HOSTNAME"),
     config.get("MYSQL_USERNAME"),
-    config.get("MYSQL_PASSWORD")
-    )
+    config.get("MYSQL_PASSWORD"),
+)
 print(mydb)
 
 # Create the cursor to manipute databases
 my_cursor = mydb.cursor()
 
-my_cursor.execute(f"SELECT * FROM {database_name}.{table_name} ORDER BY id DESC LIMIT 1;")
+my_cursor.execute(
+    f"SELECT * FROM {database_name}.{table_name} ORDER BY id DESC LIMIT 1;"
+)
 for records in my_cursor:
     print(records)
     print(records[0])
@@ -60,7 +60,7 @@ sqlStuff = f"""INSERT INTO {table_name} (icao24,
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
 
 
-# Save the record to the database 
+# Save the record to the database
 # single element at the time
 def add_to_database(data):
     try:
@@ -72,11 +72,12 @@ def add_to_database(data):
 
         # print('Record Added to DB')
     except:
-        print('Error Saving to DB')
+        print("Error Saving to DB")
+
+    mydb.close()
 
 
-
-# Save the record to the database with 
+# Save the record to the database with
 # multiple records at the same time
 def add_many_database(data):
     try:
@@ -86,6 +87,8 @@ def add_many_database(data):
         # Commit changes to the database
         mydb.commit()
 
-        print('Record Added to DB')
+        print("Record Added to DB")
     except:
-        print('Error Saving to DB')
+        print("Error Saving to DB")
+
+    mydb.close()
